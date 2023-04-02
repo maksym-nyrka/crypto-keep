@@ -7,6 +7,7 @@ class ListenerSetter {
     setEventListeners() {
         this.setSendListener();
         this.setChangeCurrencyListener();
+        this.setActiveCurrencyListener();
     }
 
     setSendListener() {
@@ -31,6 +32,24 @@ class ListenerSetter {
                 this.app.changeCurrency(currency);
             })
         }
+    }
+
+    setActiveCurrencyListener() {
+        const currencyLinks = document.querySelectorAll('.currency-select');
+
+        currencyLinks.forEach(link => {
+                link.addEventListener('click', this.toggleCurrencyActive)
+        });
+    }
+
+    toggleCurrencyActive() {
+        let active = document.getElementsByClassName('active')[0];
+        if (active !== undefined) {
+            active.classList.toggle('active');
+        }
+
+        this.classList.toggle('active');
+        console.log("this.classList", this.classList);
     }
 }
 

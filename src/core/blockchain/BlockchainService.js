@@ -19,10 +19,11 @@ class BlockchainService {
         return this.libraries[this.app.getCurrency()];
     }
 
-    getAddress() {
+    getCurrentAddress() {
         return new Promise(async (resolve, reject) => {
             try {
-                let address = await this.getCurrentLibrary().getAddress();
+                let address = await this.getCurrentLibrary().getCurrentAddress();
+
                 resolve(address);
             } catch (e) {
                 reject(e);
@@ -34,6 +35,7 @@ class BlockchainService {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await this.getCurrentLibrary().sendCurrency(to, amount);
+
                 resolve(result);
             } catch (e) {
                 reject(e);
@@ -45,6 +47,7 @@ class BlockchainService {
         return new Promise(async(resolve,reject)=>{
             try{
                 let balance = await this.getCurrentLibrary().getCurrentBalance();
+
                 resolve(balance);
             }catch (e){
                 reject(e);

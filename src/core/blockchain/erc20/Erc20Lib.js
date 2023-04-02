@@ -1,5 +1,5 @@
 const EthLib = require("../eth/EthLib");
-const Converter = require('/src/core/helpers/Converter');
+const Erc20Converter = require("../../helpers/Erc20Converter");
 
 const ERC20_ABI = require("./erc20_abi");
 
@@ -12,7 +12,7 @@ class Erc20Lib extends EthLib {
     constructor() {
         super();
         this.setContract();
-        this.converter = new Converter();
+        this.converter = new Erc20Converter();
     }
 
     composeContract() {
@@ -47,7 +47,8 @@ class Erc20Lib extends EthLib {
         return new Promise(async(resolve,reject)=>{
             try{
                 let balance = await this.getContract().methods.balanceOf(address).call();
-                balance = this.toDecimals(balance);
+                balance = this.converter.toDecimals(balance);
+
                 resolve(balance);
             }catch (e) {
                 reject(e);
@@ -62,24 +63,17 @@ class Erc20Lib extends EthLib {
     sendCurrency(to,amount){
         return new Promise(async(resolve,reject)=>{
             try{
-                amount = this.fromDecimals(amount);
+                amount = this.converter.fromDecimals(amount);
+
                 let data = this.getContract().methods.transfer(to, amount).encodeABI();
-                console.log("sendCurrency data",data);
                 let txData = await this._formatTransactionParams(this.getContractAddress(),"0",data);
                 let hash = await this._makeTransaction(txData);
+
                 resolve(hash);
             }catch (e){
                 reject(e);
             }
         });
-    }
-
-    toDecimals(amount){
-        return this.converter.toDecimals(amount,this.getDecimals());
-    }
-
-    fromDecimals(amount){
-        return this.converter.fromDecimals(amount,this.getDecimals());
     }
 
     getDecimals(){

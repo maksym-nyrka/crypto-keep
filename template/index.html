@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CryptoKeep</title>
+
+    <link rel="stylesheet" href="./styles/styles.css">
+</head>
+<body>
+<a class="currency-select" data-value="ETH" href="#">ETH</a>
+<a class="currency-select" data-value="ERC20" href="#">ERC20</a>
+<br>
+<h2 class="currency_name">currency_name</h2>
+<div>
+    <span id="currency_balance">currency_balance</span> <span class="currency_name">currency_name</span>
+    <p>
+        <span>Address:</span> <span id="currency_address">currency_address</span>
+    </p>
+</div>
+<p>Send:</p>
+<div><input id="receiver_input" type="text" placeholder="Receiver"></div>
+<div><input id="amount_input" type="text" placeholder="Amount"></div>
+<button id="send_button">Send</button>
+
+<script src="./main.js"></script>
+</body>
+</html>

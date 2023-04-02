@@ -29,7 +29,7 @@ class Renderer {
     renderAddress() {
         const addressElement = document.getElementById("currency_address");
 
-        this.app.getAddress().then( address => {
+        this.app.getCurrentAddress().then(address => {
             addressElement.innerText = String(address);
         });
     }

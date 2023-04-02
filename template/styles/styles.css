@@ -1,0 +1,11 @@
+
+body {
+    background-image: url('astronaut.jpg');
+    background-repeat:no-repeat;
+    background-size:cover;
+    color: darkblue;
+}
+
+input {
+    width: 330px;
+}

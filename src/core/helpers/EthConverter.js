@@ -3,11 +3,11 @@ const DECIMALS= 18;
 class EthConverter extends Converter{
 
     toDecimals(amount, decimals= DECIMALS, precision) {
-        return super.toDecimals(amount, DECIMALS);
+        return super.toDecimals(amount, decimals);
     }
 
-    fromDecimals(amount) {
-        return super.fromDecimals(amount, DECIMALS);
+    fromDecimals(amount, decimals= DECIMALS) {
+        return super.fromDecimals(amount, decimals);
     }
 }
 

@@ -1,8 +1,10 @@
 const Web3 = require("web3");
 const Transaction = require('ethereumjs-tx');
 const EthConverter = require("../../helpers/EthConverter");
+const AbstractCurrencyLibrary = require("../AbstractCurrencyLibrary")
 
-class EthLib {
+class EthLib extends AbstractCurrencyLibrary {
+
     PROVIDER_URL = process.env.PROVIDER_URL;
     ETH_ADDRESS = process.env.ETH_ADDRESS;
     PRIVATE_KEY = process.env.SIGNER_PRIVATE_KEY;
@@ -11,6 +13,7 @@ class EthLib {
     GAS_LIMIT = 21000;
 
     constructor() {
+        super();
         this.web3 = new Web3(new Web3.providers.HttpProvider(this.PROVIDER_URL));
         this.converter = new EthConverter();
     }
@@ -25,11 +28,23 @@ class EthLib {
         })
     }
 
+    getCurrentAddress() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let address = await this.getAddress();
+                resolve(address);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
     getCurrentBalance(){
         return new Promise(async(resolve,reject)=>{
             try{
                 let address = await this.getAddress();
-                let balance =await this.getBalance(address);
+                let balance = await this.getBalance(address);
+
                 resolve(balance);
             }catch (e){
                 reject(e);
@@ -41,9 +56,8 @@ class EthLib {
         return new Promise(async (resolve, reject) => {
             try {
                 let balance = await this.web3.eth.getBalance(address);
-                ///balance = this.web3.utils.fromWei(balance);
                 balance = this.converter.toDecimals(balance);
-                //balance = parseFloat(balance).toFixed(4);
+
                 resolve(balance);
             } catch (e) {
                 reject(e);
@@ -66,6 +80,7 @@ class EthLib {
             try {
                 let txData = await this._formatTransactionParams(to,amount);
                 let hash = await this._makeTransaction(txData);
+
                 resolve(hash);
             } catch (e) {
                 reject(e);
@@ -83,7 +98,7 @@ class EthLib {
 
                 let gasPrice = this.getGasPrice();
                 let gasLimit = this.getGasLimit();
-                value = this.fromDecimals(value);
+                value = this.converter.fromDecimals(value);
 
                 let txParams = {
                     "from":from,
@@ -95,19 +110,12 @@ class EthLib {
                     "nonce":nonce,
                     "data":data,
                 };
+
                 resolve(txParams);
             }catch (e){
                 reject(e);
             }
         })
-    }
-
-    toDecimals(amount){
-        return this.web3.utils.fromWei(amount);
-    }
-
-    fromDecimals(amount){
-        return this.web3.utils.toWei(amount);
     }
 
     getGasPrice(){
@@ -117,11 +125,13 @@ class EthLib {
     getGasLimit(){
         return this.GAS_LIMIT;
     }
+
     getNextNonce(){
         return new Promise(async(resolve,reject)=>{
             try{
                 let address = String(await this.getAddress());
                 let nonce = await this.web3.eth.getTransactionCount(address);
+
                 resolve(nonce);
             }catch (e){
                 reject(e)

@@ -39,10 +39,10 @@ class Application {
         })
     }
 
-    getAddress() {
+    getCurrentAddress() {
         return new Promise(async (resolve, reject) => {
             try {
-                let address = await this.blockchainService.getAddress();
+                let address = await this.blockchainService.getCurrentAddress();
                 resolve(address);
             } catch (e) {
                 reject(e);

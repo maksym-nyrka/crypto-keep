@@ -1,13 +1,13 @@
 const Converter = require('./Converter');
 const DECIMALS= 18;
 
-class Erc20Converter extends Converter{
+class Erc20Converter extends Converter {
 
-    toDecimals(amount) {
+    toDecimals(amount, decimals= DECIMALS, precision) {
         return super.toDecimals(amount, DECIMALS);
     }
 
-    fromDecimals(amount) {
+    fromDecimals(amount, decimals= DECIMALS) {
         return super.fromDecimals(amount, DECIMALS);
     }
 }
