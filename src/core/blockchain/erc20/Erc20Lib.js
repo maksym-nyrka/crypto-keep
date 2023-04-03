@@ -2,6 +2,8 @@ const EthLib = require("../eth/EthLib");
 const Erc20Converter = require("../../helpers/Erc20Converter");
 
 const ERC20_ABI = require("./erc20_abi");
+const EthValidator = require("../../validators/blockchain/EthValidator");
+const EthConverter = require("../../helpers/EthConverter");
 
 const CONTRACT_ADDRESS = process.env.ERC20_ADDRESS;
 const GAS_LIMIT = 300000;
@@ -12,14 +14,15 @@ class Erc20Lib extends EthLib {
     constructor() {
         super();
         this.setContract();
-        this.converter = new Erc20Converter();
+        this.setValidator(new EthValidator());
+        this.setConverter(new EthConverter());
     }
 
     composeContract() {
-        return new this.web3.eth.Contract(ERC20_ABI, this.getContractAddress());
+        return new this.provider.eth.Contract(ERC20_ABI, this.getContractAddress());
     }
 
-    setContract(){
+    setContract() {
         this.contract = this.composeContract();
     }
 
@@ -31,52 +34,67 @@ class Erc20Lib extends EthLib {
         return this.contract;
     }
 
-    getCurrentBalance() {
-        return new Promise(async(resolve,reject)=>{
-            try{
-                let address = await this.getAddress();
-                let balance = await this.getBalance(address);
-                resolve(balance);
-            }catch (e) {
-                reject(e);
-            }
-        });
-    }
+    // getCurrentBalance() {
+    //     return new Promise(async (resolve, reject) => {
+    //         try {
+    //             let address = await this.getAddress();
+    //             let balance = await this.getBalance(address);
+    //             this.getValidator().validateNumber(balance);
+    //
+    //             resolve(balance);
+    //         } catch (e) {
+    //             reject(e);
+    //         }
+    //     });
+    // }
 
-    getBalance(address){
-        return new Promise(async(resolve,reject)=>{
-            try{
+    getBalance(address) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                this.getValidator().validateAddress(address);
+
                 let balance = await this.getContract().methods.balanceOf(address).call();
-                balance = this.converter.toDecimals(balance);
+                balance = this.toDecimals(balance);
 
                 resolve(balance);
-            }catch (e) {
+            } catch (e) {
                 reject(e);
             }
         });
     }
 
-    getGasLimit(){
+    getGasLimit() {
         return GAS_LIMIT;
     }
 
-    sendCurrency(to,amount){
-        return new Promise(async(resolve,reject)=>{
-            try{
-                amount = this.converter.fromDecimals(amount);
+    // toDecimals(amount) {
+    //     return this.getConverter().toDecimals(amount);
+    // }
+    //
+    // fromDecimals(amount) {
+    //     return this.getConverter().fromDecimals(amount);
+    // }
+
+    sendCurrency(to, amount) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                this.getValidator().validateAddress(to);
+                this.getValidator().validateNumber(amount);
+
+                amount = this.fromDecimals(amount);
 
                 let data = this.getContract().methods.transfer(to, amount).encodeABI();
-                let txData = await this._formatTransactionParams(this.getContractAddress(),"0",data);
+                let txData = await this._formatTransactionParams(this.getContractAddress(), "0", data);
                 let hash = await this._makeTransaction(txData);
 
                 resolve(hash);
-            }catch (e){
+            } catch (e) {
                 reject(e);
             }
         });
     }
 
-    getDecimals(){
+    getDecimals() {
         return DECIMALS;
     }
 }

@@ -1,7 +1,7 @@
 const Converter = require('./Converter');
-const DECIMALS= 18;
+const DECIMALS= 8;
 
-class EthConverter extends Converter {
+class BtcConverter extends Converter {
 
     toDecimals(amount, decimals= DECIMALS, precision) {
         return super.toDecimals(amount, decimals);
@@ -12,4 +12,4 @@ class EthConverter extends Converter {
     }
 }
 
-module.exports = EthConverter;
+module.exports = BtcConverter;

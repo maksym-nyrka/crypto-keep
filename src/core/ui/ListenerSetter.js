@@ -49,7 +49,6 @@ class ListenerSetter {
         }
 
         this.classList.toggle('active');
-        console.log("this.classList", this.classList);
     }
 }
 

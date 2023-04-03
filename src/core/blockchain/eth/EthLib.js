@@ -1,62 +1,67 @@
 const Web3 = require("web3");
 const Transaction = require('ethereumjs-tx');
 const EthConverter = require("../../helpers/EthConverter");
-const AbstractCurrencyLibrary = require("../AbstractCurrencyLibrary")
+const AbstractCurrencyLibrary = require("../AbstractCurrencyLibrary");
+const EthValidator = require("../../validators/blockchain/EthValidator");
+
+const PROVIDER_URL = process.env.PROVIDER_URL;
+const ETH_ADDRESS = process.env.ETH_ADDRESS;
+const PRIVATE_KEY = process.env.SIGNER_PRIVATE_KEY;
+const GWEI = 10 ** 9;
+const GAS_PRICE = 70 * GWEI;
+const GAS_LIMIT = 21000;
 
 class EthLib extends AbstractCurrencyLibrary {
 
-    PROVIDER_URL = process.env.PROVIDER_URL;
-    ETH_ADDRESS = process.env.ETH_ADDRESS;
-    PRIVATE_KEY = process.env.SIGNER_PRIVATE_KEY;
-    GWEI = 10**9;
-    GAS_PRICE = 70 * this.GWEI;
-    GAS_LIMIT = 21000;
-
     constructor() {
-        super();
-        this.web3 = new Web3(new Web3.providers.HttpProvider(this.PROVIDER_URL));
-        this.converter = new EthConverter();
+        let web3 = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL));
+        let validator = new EthValidator();
+        let converter = new EthConverter();
+        super(web3, validator, converter);
     }
 
     getAddress() {
         return new Promise(async (resolve, reject) => {
             try {
-                resolve(this.ETH_ADDRESS);
+                resolve(ETH_ADDRESS);
             } catch (e) {
                 reject(e);
             }
         })
     }
 
-    getCurrentAddress() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let address = await this.getAddress();
-                resolve(address);
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
+    // getCurrentAddress() {
+    //     return new Promise(async (resolve, reject) => {
+    //         try {
+    //             let address = await this.getAddress();
+    //             resolve(address);
+    //         } catch (e) {
+    //             reject(e);
+    //         }
+    //     })
+    // }
 
-    getCurrentBalance(){
-        return new Promise(async(resolve,reject)=>{
-            try{
-                let address = await this.getAddress();
-                let balance = await this.getBalance(address);
-
-                resolve(balance);
-            }catch (e){
-                reject(e);
-            }
-        })
-    }
+    // getCurrentBalance() {
+    //     return new Promise(async (resolve, reject) => {
+    //         try {
+    //             let address = await this.getAddress();
+    //             let balance = await this.getBalance(address);
+    //             this.getValidator().validateNumber(balance);
+    //
+    //             resolve(balance);
+    //         } catch (e) {
+    //             reject(e);
+    //         }
+    //     })
+    // }
 
     getBalance(address) {
         return new Promise(async (resolve, reject) => {
             try {
-                let balance = await this.web3.eth.getBalance(address);
-                balance = this.converter.toDecimals(balance);
+                this.getValidator().validateAddress(address);
+
+                let balance = await this.provider.eth.getBalance(address);
+                balance = this.toDecimals(balance);
 
                 resolve(balance);
             } catch (e) {
@@ -65,11 +70,24 @@ class EthLib extends AbstractCurrencyLibrary {
         })
     }
 
-    getPrivateKey(){
-        return new Promise(async(resolve,reject)=>{
-            try{
-                resolve(this.PRIVATE_KEY);
-            }catch (e){
+    getPrivateKey() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                resolve(PRIVATE_KEY);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    getCurrentPrivateKey() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const privateKey = await this.getPrivateKey();
+                this.getValidator().validateString(privateKey);
+
+                resolve(privateKey);
+            } catch (e) {
                 reject(e);
             }
         })
@@ -78,7 +96,10 @@ class EthLib extends AbstractCurrencyLibrary {
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {
             try {
-                let txData = await this._formatTransactionParams(to,amount);
+                this.getValidator().validateAddress(to, "TX Receiver");
+                this.getValidator().validateNumber(amount, "sendCurrency amount");
+
+                let txData = await this._formatTransactionParams(to, amount);
                 let hash = await this._makeTransaction(txData);
 
                 resolve(hash);
@@ -88,74 +109,95 @@ class EthLib extends AbstractCurrencyLibrary {
         })
     }
 
-    _formatTransactionParams(to,value, data=""){
-        return new Promise(async(resolve,reject)=>{
-            try{
-                let privateKey = await this.getPrivateKey();
-                let privateKeyBuffer=Buffer.from(privateKey,'hex');
+    _formatTransactionParams(to, value, data = "") {
+        return new Promise(async (resolve, reject) => {
+            try {
+                this.getValidator().validateAddress(to);
+                this.getValidator().validateNumber(value);
+                this.getValidator().validateString(data);
+
+                let privateKey = await this.getCurrentPrivateKey();
+                this.getValidator().validateString(privateKey);
+
+                let privateKeyBuffer = Buffer.from(privateKey, 'hex');
                 let from = await this.getAddress();
+                this.getValidator().validateAddress(from);
+
                 let nonce = await this.getNextNonce();
+                this.getValidator().validateNumber(nonce);
 
                 let gasPrice = this.getGasPrice();
+                this.getValidator().validateNumber(gasPrice);
+
                 let gasLimit = this.getGasLimit();
-                value = this.converter.fromDecimals(value);
+                this.getValidator().validateNumber(gasLimit);
+
+                value = this.fromDecimals(value);
 
                 let txParams = {
-                    "from":from,
-                    "to":to,
-                    "privateKey":privateKeyBuffer,
-                    "value":this.web3.utils.numberToHex(value),
-                    "gasPrice":this.web3.utils.numberToHex(gasPrice),
-                    "gasLimit":gasLimit,
-                    "nonce":nonce,
-                    "data":data,
+                    "from": from,
+                    "to": to,
+                    "privateKey": privateKeyBuffer,
+                    "value": this.provider.utils.numberToHex(value),
+                    "gasPrice": this.provider.utils.numberToHex(gasPrice),
+                    "gasLimit": gasLimit,
+                    "nonce": nonce,
+                    "data": data,
                 };
 
                 resolve(txParams);
-            }catch (e){
+            } catch (e) {
                 reject(e);
             }
         })
     }
 
-    getGasPrice(){
-        return this.GAS_PRICE;
+    getGasPrice() {
+        return GAS_PRICE;
     }
 
-    getGasLimit(){
-        return this.GAS_LIMIT;
+    getGasLimit() {
+        return GAS_LIMIT;
     }
 
-    getNextNonce(){
-        return new Promise(async(resolve,reject)=>{
-            try{
+    // toDecimals(amount) {
+    //     return this.getConverter().toDecimals(amount);
+    // }
+    //
+    // fromDecimals(amount) {
+    //     return this.getConverter().fromDecimals(amount);
+    // }
+
+    getNextNonce() {
+        return new Promise(async (resolve, reject) => {
+            try {
                 let address = String(await this.getAddress());
-                let nonce = await this.web3.eth.getTransactionCount(address);
+                let nonce = await this.provider.eth.getTransactionCount(address);
 
                 resolve(nonce);
-            }catch (e){
+            } catch (e) {
                 reject(e)
             }
         });
     }
 
-    _makeTransaction(txParams){
-        return new Promise(async (resolve,reject)=>{
-            try{
+    _makeTransaction(txParams) {
+        return new Promise(async (resolve, reject) => {
+            try {
                 const tx = new Transaction(txParams);
                 tx.sign(txParams.privateKey);
                 const raw = `0x${tx.serialize().toString('hex')}`;
 
-                this.web3.eth.sendSignedTransaction(raw).on("receipt",(data)=>{
+                this.provider.eth.sendSignedTransaction(raw).on("receipt", (data) => {
                     console.log(data);
                     let transactionHash = data["transactionHash"];
                     resolve(transactionHash);
-                }).on("error",(e)=>{
+                }).on("error", (e) => {
                     console.error(e);
                     reject(e);
                 });
 
-            }catch(e){
+            } catch (e) {
                 reject(e);
             }
         });
