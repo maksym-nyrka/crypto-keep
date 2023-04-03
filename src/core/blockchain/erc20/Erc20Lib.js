@@ -34,27 +34,13 @@ class Erc20Lib extends EthLib {
         return this.contract;
     }
 
-    // getCurrentBalance() {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             let address = await this.getAddress();
-    //             let balance = await this.getBalance(address);
-    //             this.getValidator().validateNumber(balance);
-    //
-    //             resolve(balance);
-    //         } catch (e) {
-    //             reject(e);
-    //         }
-    //     });
-    // }
-
     getBalance(address) {
         return new Promise(async (resolve, reject) => {
             try {
                 this.getValidator().validateAddress(address);
 
                 let balance = await this.getContract().methods.balanceOf(address).call();
-                balance = this.toDecimals(balance);
+                balance = await this.toDecimals(balance);
 
                 resolve(balance);
             } catch (e) {
@@ -67,21 +53,13 @@ class Erc20Lib extends EthLib {
         return GAS_LIMIT;
     }
 
-    // toDecimals(amount) {
-    //     return this.getConverter().toDecimals(amount);
-    // }
-    //
-    // fromDecimals(amount) {
-    //     return this.getConverter().fromDecimals(amount);
-    // }
-
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {
             try {
                 this.getValidator().validateAddress(to);
                 this.getValidator().validateNumber(amount);
 
-                amount = this.fromDecimals(amount);
+                amount = await this.fromDecimals(amount);
 
                 let data = this.getContract().methods.transfer(to, amount).encodeABI();
                 let txData = await this._formatTransactionParams(this.getContractAddress(), "0", data);

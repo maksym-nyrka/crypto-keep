@@ -32,7 +32,8 @@ class BtcLib extends AbstractCurrencyLibrary {
                 this.getValidator().validateAddress(address);
 
                 let balance = await this.provider.getBalance(address);
-                balance = this.toDecimals(balance);
+                balance = await this.toDecimals(balance);
+                this.getValidator().validateNumber(balance);
 
                 resolve(balance);
             } catch (e) {

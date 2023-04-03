@@ -14,7 +14,7 @@ class BlockcypherProvider {
                 result = await result.json();
 
                 let balance = result["final_balance"];
-                console.log("getBalance balance", balance);
+
                 resolve(balance);
             } catch (e) {
                 reject(e);
@@ -27,6 +27,7 @@ class BlockcypherProvider {
             if (!headers) {
                 headers = {"Content-Type": "application/json"};
             }
+
             const options = {
                 body: data,
                 method: method,

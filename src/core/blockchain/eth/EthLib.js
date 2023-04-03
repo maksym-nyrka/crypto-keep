@@ -30,38 +30,13 @@ class EthLib extends AbstractCurrencyLibrary {
         })
     }
 
-    // getCurrentAddress() {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             let address = await this.getAddress();
-    //             resolve(address);
-    //         } catch (e) {
-    //             reject(e);
-    //         }
-    //     })
-    // }
-
-    // getCurrentBalance() {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             let address = await this.getAddress();
-    //             let balance = await this.getBalance(address);
-    //             this.getValidator().validateNumber(balance);
-    //
-    //             resolve(balance);
-    //         } catch (e) {
-    //             reject(e);
-    //         }
-    //     })
-    // }
-
     getBalance(address) {
         return new Promise(async (resolve, reject) => {
             try {
                 this.getValidator().validateAddress(address);
 
                 let balance = await this.provider.eth.getBalance(address);
-                balance = this.toDecimals(balance);
+                balance = await this.toDecimals(balance);
 
                 resolve(balance);
             } catch (e) {
@@ -74,19 +49,6 @@ class EthLib extends AbstractCurrencyLibrary {
         return new Promise(async (resolve, reject) => {
             try {
                 resolve(PRIVATE_KEY);
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
-
-    getCurrentPrivateKey() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const privateKey = await this.getPrivateKey();
-                this.getValidator().validateString(privateKey);
-
-                resolve(privateKey);
             } catch (e) {
                 reject(e);
             }
@@ -132,7 +94,7 @@ class EthLib extends AbstractCurrencyLibrary {
                 let gasLimit = this.getGasLimit();
                 this.getValidator().validateNumber(gasLimit);
 
-                value = this.fromDecimals(value);
+                value = await this.fromDecimals(value);
 
                 let txParams = {
                     "from": from,
@@ -159,14 +121,6 @@ class EthLib extends AbstractCurrencyLibrary {
     getGasLimit() {
         return GAS_LIMIT;
     }
-
-    // toDecimals(amount) {
-    //     return this.getConverter().toDecimals(amount);
-    // }
-    //
-    // fromDecimals(amount) {
-    //     return this.getConverter().fromDecimals(amount);
-    // }
 
     getNextNonce() {
         return new Promise(async (resolve, reject) => {

@@ -62,31 +62,30 @@ class AbstractCurrencyLibrary {
     }
 
     toDecimals(amount) {
-        return this.getConverter().toDecimals(amount);
-    }
+        return new Promise(async (resolve, reject) => {
+            try {
+                const decimals = await this.getConverter().toDecimals(amount);
+                this.getValidator().validateNumber(decimals);
+
+                resolve(decimals);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    };
 
     fromDecimals(amount) {
-        return this.getConverter().fromDecimals(amount);
-    }
-    // toDecimals(amount) {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             reject("toDecimals(amount) not implemented");
-    //         } catch (e) {
-    //             reject(e);
-    //         }
-    //     })
-    // };
-    //
-    // fromDecimals(amount) {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             reject("fromDecimals(amount) not implemented");
-    //         } catch (e) {
-    //             reject(e);
-    //         }
-    //     })
-    // };
+        return new Promise(async (resolve, reject) => {
+            try {
+                const decimals = this.getConverter().fromDecimals(amount);
+                this.getValidator().validateNumber(decimals);
+
+                resolve(decimals);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    };
 
     getProvider() {
         return this.provider;
