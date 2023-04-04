@@ -1,7 +1,7 @@
 const DEFAULT_CURRENCY = "ETH";
 
 const WalletUi = require("./core/ui/WalletUi");
-const BlockchainService  = require("./core/blockchain/BlockchainService");
+const BlockchainService = require("./core/blockchain/BlockchainService");
 
 class Application {
 
@@ -28,13 +28,13 @@ class Application {
         return this.currency;
     }
 
-    getCurrentBalance(){
-        return new Promise(async(resolve,reject)=>{
-            try{
+    getCurrentBalance() {
+        return new Promise(async (resolve, reject) => {
+            try {
                 let balance = await this.blockchainService.getCurrentBalance();
-                return resolve(balance);
-            }catch (e){
-                return reject(e);
+                resolve(balance);
+            } catch (e) {
+                reject(e);
             }
         })
     }

@@ -16,11 +16,11 @@ class BtcLib extends AbstractCurrencyLibrary {
         super(provider, validator, converter);
     }
 
-    getAddress(){
-        return new Promise(async(resolve,reject)=>{
+    getAddress() {
+        return new Promise(async (resolve, reject) => {
             try {
                 resolve(BTC_ADDRESS);
-            }catch(e){
+            } catch (e) {
                 reject(e);
             }
         })

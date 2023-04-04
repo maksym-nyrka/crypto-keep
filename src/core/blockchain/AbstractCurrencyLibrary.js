@@ -8,9 +8,33 @@ class AbstractCurrencyLibrary {
         staticValidator.validateObject(validator, "validator");
         staticValidator.validateObject(converter, "converter");
 
+        this.setProvider(provider);
+        this.setValidator(validator);
+        this.setConverter(converter);
+    }
+
+    getProvider() {
+        return this.provider;
+    }
+
+    setProvider(provider) {
         this.provider = provider;
-        this.validator = validator;
+    }
+
+    getConverter() {
+        return this.converter;
+    }
+
+    setConverter(converter) {
         this.converter = converter;
+    }
+
+    getValidator() {
+        return this.validator;
+    }
+
+    setValidator(validator) {
+        this.validator = validator;
     }
 
     getCurrentAddress() {
@@ -46,7 +70,7 @@ class AbstractCurrencyLibrary {
                 reject(e);
             }
         })
-    };
+    }
 
     getCurrentPrivateKey() {
         return new Promise(async (resolve, reject) => {
@@ -72,7 +96,7 @@ class AbstractCurrencyLibrary {
                 reject(e);
             }
         })
-    };
+    }
 
     fromDecimals(amount) {
         return new Promise(async (resolve, reject) => {
@@ -85,30 +109,6 @@ class AbstractCurrencyLibrary {
                 reject(e);
             }
         })
-    };
-
-    getProvider() {
-        return this.provider;
-    }
-
-    setProvider(provider) {
-        this.provider = provider;
-    }
-
-    setValidator(validator) {
-        this.validator = validator;
-    }
-
-    getConverter() {
-        return this.converter;
-    }
-
-    setConverter(converter) {
-        this.converter = converter;
-    }
-
-    getValidator() {
-        return this.validator;
     }
 }
 
