@@ -2,13 +2,15 @@ const DEFAULT_CURRENCY = "ETH";
 
 const WalletUi = require("./core/ui/WalletUi");
 const BlockchainService = require("./core/blockchain/BlockchainService");
+const HttpService = require("./core/services/HttpService");
 
 class Application {
 
     constructor() {
         this.setCurrency(DEFAULT_CURRENCY);
-        this.blockchainService = new BlockchainService(this);
+        this.httpService = new HttpService(this);
         this.walletUi = new WalletUi(this);
+        this.blockchainService = new BlockchainService(this);
     }
 
     prepareInterface() {

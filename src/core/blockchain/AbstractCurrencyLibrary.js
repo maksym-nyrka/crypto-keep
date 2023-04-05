@@ -101,7 +101,7 @@ class AbstractCurrencyLibrary {
     fromDecimals(amount) {
         return new Promise(async (resolve, reject) => {
             try {
-                const decimals = this.getConverter().fromDecimals(amount);
+                const decimals = await this.getConverter().fromDecimals(amount);
                 this.getValidator().validateNumber(decimals);
 
                 resolve(decimals);
