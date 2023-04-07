@@ -5,8 +5,6 @@ const BlockcypherProvider = require("./BlockcypherProvider");
 const BtcValidator = require("../../validators/blockchain/BtcValidator");
 const BtcConverter = require("../../helpers/BtcConverter");
 
-// const BTC_ADDRESS = process.env.BTC_ADDRESS;
-const BTC_WIF = process.env.BTC_WIF;
 const BTC_NETWORK = networks.testnet;
 
 class BtcLib extends AbstractCurrencyLibrary {
@@ -18,16 +16,6 @@ class BtcLib extends AbstractCurrencyLibrary {
 
         super(app, provider, validator, converter);
     }
-
-    // getAddress() {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             resolve(BTC_ADDRESS);
-    //         } catch (e) {
-    //             reject(e);
-    //         }
-    //     })
-    // };
 
     getBalance(address) {
         return new Promise(async (resolve, reject) => {

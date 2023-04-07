@@ -5,8 +5,6 @@ const AbstractCurrencyLibrary = require("../AbstractCurrencyLibrary");
 const EthValidator = require("../../validators/blockchain/EthValidator");
 
 const PROVIDER_URL = process.env.PROVIDER_URL;
-const ETH_ADDRESS = process.env.ETH_ADDRESS;
-const PRIVATE_KEY = process.env.SIGNER_PRIVATE_KEY;
 const GWEI = 10 ** 9;
 const GAS_PRICE = 70 * GWEI;
 const GAS_LIMIT = 21000;
@@ -20,16 +18,6 @@ class EthLib extends AbstractCurrencyLibrary {
         let converter = new EthConverter();
         super(app, web3, validator, converter);
     }
-
-    // getAddress() {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             resolve(ETH_ADDRESS);
-    //         } catch (e) {
-    //             reject(e);
-    //         }
-    //     })
-    // }
 
     getBalance(address) {
         return new Promise(async (resolve, reject) => {
@@ -45,16 +33,6 @@ class EthLib extends AbstractCurrencyLibrary {
             }
         })
     }
-
-    // getPrivateKey() {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             resolve(PRIVATE_KEY);
-    //         } catch (e) {
-    //             reject(e);
-    //         }
-    //     })
-    // }
 
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {

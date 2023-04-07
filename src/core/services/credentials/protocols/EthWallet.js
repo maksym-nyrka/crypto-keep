@@ -3,7 +3,6 @@ const bip32 = require("bip32");
 const bip39 = require("bip39");
 const privKeyToAddressETH = require('ethereum-private-key-to-address');
 
-
 class EthWallet extends AbstractCurrencyWallet {
 
     provideAddress(mnemonic) {

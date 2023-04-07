@@ -4,10 +4,6 @@ const Erc20Wallet = require('./protocols/Erc20Wallet');
 const BtcWallet = require('./protocols/BtcWallet');
 const Validator = require("/src/core/validators/Validator");
 
-const BTC = "BTC";
-const ETH = "ETH";
-const ERC20 = "ERC20";
-
 class CredentialsService {
 
     constructor(app) {

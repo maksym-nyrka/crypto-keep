@@ -8,7 +8,6 @@ class Renderer {
         this.renderCurrency();
         this.renderBalance();
         this.renderAddress();
-        // this.renderQrCode();
     }
 
     renderCurrency() {
@@ -33,14 +32,6 @@ class Renderer {
             addressElement.innerText = String(address);
         });
     }
-
-    // renderQrCode() {
-    //     const qrElement = document.getElementById("currency_qrcode");
-    //
-    //     this.app.getAddress().then( address => {
-    //         qrElement.value = String(address);
-    //     });
-    // }
 }
 
 module.exports = Renderer;

@@ -2,49 +2,51 @@ const GET = 'GET';
 const POST = 'POST';
 const PUT = 'PUT';
 
-class HttpService{
-    constructor(app){
+class HttpService {
+
+    constructor(app) {
         this.app = app;
     };
 
     postRequest(url, data, headers) {
-        return new Promise(async(resolve,reject)=>{
-            try{
-                if(!headers){
+        return new Promise(async (resolve, reject) => {
+            try {
+                if (!headers) {
                     headers = {"Content-Type": "application/json"};
                 }
                 const result = await this.httpRequest(POST, url, data, headers)
                 resolve(result);
-            }catch(e){
+            } catch (e) {
                 reject(e);
             }
         });
     };
+
     getRequest(url, data, headers) {
-        return new Promise(async(resolve,reject)=>{
-            try{
+        return new Promise(async (resolve, reject) => {
+            try {
                 const result = await this.httpRequest(GET, url, data, headers)
                 resolve(result);
-            }catch(e){
+            } catch (e) {
                 reject(e);
             }
         });
     };
 
     putRequest(url, data, headers) {
-        return new Promise(async(resolve,reject) => {
-            try{
+        return new Promise(async (resolve, reject) => {
+            try {
                 const result = await this.httpRequest(PUT, url, data, headers)
                 resolve(result);
-            }catch(e){
+            } catch (e) {
                 reject(e);
             }
         });
     };
 
-    httpRequest(method, url, data, headers={}) {
-        return new Promise(async(resolve,reject)=>{
-            const options={
+    httpRequest(method, url, data, headers = {}) {
+        return new Promise(async (resolve, reject) => {
+            const options = {
                 body: data,
                 method: method,
                 headers: headers

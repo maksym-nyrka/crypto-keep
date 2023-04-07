@@ -19,9 +19,11 @@ class BlockchainService {
             "ERC20": erc20,
             "BTC": btc,
         };
+        console.log("libraries",this.libraries);
     }
 
     getCurrentLibrary() {
+        console.log("getCurrentLibrary",this.app.getCurrency(),this.libraries[this.app.getCurrency()])
         return this.libraries[this.app.getCurrency()];
     }
 
@@ -76,9 +78,9 @@ class BlockchainService {
     importMnemonic(mnemonic) {
         return new Promise(async (resolve, reject) => {
             try {
-                let result = await this.credentials.importMnemonic(mnemonic);
+                await this.credentials.importMnemonic(mnemonic);
 
-                resolve(result);
+                resolve();
             } catch (e) {
                 reject(e);
             }

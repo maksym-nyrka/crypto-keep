@@ -53,3 +53,19 @@ body {
   color: #333;
   text-shadow: none; /* Prevent inheritance from `body` */
 }
+
+main {
+  display: none;
+}
+
+.modal-footer {
+  justify-content: center;
+}
+
+.modal {
+  --bs-modal-width: 700px;
+}
+
+.modal-content {
+  background-color: rgba(95,173, 220, 0.4);
+}

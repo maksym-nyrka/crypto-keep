@@ -89,5 +89,3 @@ class Application {
 }
 
 new Application();
-// app.prepareInterface();
-// alert("Please insert mnemonic");
