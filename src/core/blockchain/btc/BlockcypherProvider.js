@@ -188,6 +188,7 @@ class BlockcypherProvider {
                 this.validator.validateString(rawTx, "rawTx");
                 let url = this.urlCompose(SEND);
                 let body = JSON.stringify({"tx": rawTx});
+                console.log("sendTx body", body);
                 let result = await this.postRequest(url, body);
                 console.log("sendTx result", result);
                 resolve(result.tx.hash);

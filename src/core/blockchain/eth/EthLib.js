@@ -13,22 +13,23 @@ const GAS_LIMIT = 21000;
 
 class EthLib extends AbstractCurrencyLibrary {
 
-    constructor() {
+    constructor(app) {
+        console.log("EthLib app",app);
         let web3 = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL));
         let validator = new EthValidator();
         let converter = new EthConverter();
-        super(web3, validator, converter);
+        super(app, web3, validator, converter);
     }
 
-    getAddress() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                resolve(ETH_ADDRESS);
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
+    // getAddress() {
+    //     return new Promise(async (resolve, reject) => {
+    //         try {
+    //             resolve(ETH_ADDRESS);
+    //         } catch (e) {
+    //             reject(e);
+    //         }
+    //     })
+    // }
 
     getBalance(address) {
         return new Promise(async (resolve, reject) => {
@@ -45,15 +46,15 @@ class EthLib extends AbstractCurrencyLibrary {
         })
     }
 
-    getPrivateKey() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                resolve(PRIVATE_KEY);
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
+    // getPrivateKey() {
+    //     return new Promise(async (resolve, reject) => {
+    //         try {
+    //             resolve(PRIVATE_KEY);
+    //         } catch (e) {
+    //             reject(e);
+    //         }
+    //     })
+    // }
 
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {
@@ -82,7 +83,7 @@ class EthLib extends AbstractCurrencyLibrary {
                 this.getValidator().validateString(privateKey);
 
                 let privateKeyBuffer = Buffer.from(privateKey, 'hex');
-                let from = await this.getAddress();
+                let from = await this.getCurrentAddress();
                 this.getValidator().validateAddress(from);
 
                 let nonce = await this.getNextNonce();
@@ -125,7 +126,7 @@ class EthLib extends AbstractCurrencyLibrary {
     getNextNonce() {
         return new Promise(async (resolve, reject) => {
             try {
-                let address = String(await this.getAddress());
+                let address = String(await this.getCurrentAddress());
                 let nonce = await this.provider.eth.getTransactionCount(address);
 
                 resolve(nonce);

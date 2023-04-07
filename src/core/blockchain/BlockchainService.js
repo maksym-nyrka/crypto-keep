@@ -1,23 +1,27 @@
 const EthLib = require("./eth/EthLib");
 const Erc20Lib = require('./erc20/Erc20Lib');
 const BtcLib = require("./btc/BtcLib");
+const CredentialService = require('/src/core/services/credentials/CredentialsService');
 
 class BlockchainService {
 
     constructor(app) {
         this.app = app;
-        let eth = new EthLib();
-        let erc20 = new Erc20Lib();
+        this.credentials = new CredentialService(app);
+        console.log("BlockchainService app",app);
+        let eth = new EthLib(app);
+        console.log("BlockchainService app2",app);
+        let erc20 = new Erc20Lib(app);
         let btc = new BtcLib(app);
 
         this.libraries = {
-            "ETH":eth,
-            "ERC20":erc20,
+            "ETH": eth,
+            "ERC20": erc20,
             "BTC": btc,
         };
     }
 
-    getCurrentLibrary(){
+    getCurrentLibrary() {
         return this.libraries[this.app.getCurrency()];
     }
 
@@ -45,13 +49,37 @@ class BlockchainService {
         })
     }
 
-    getCurrentBalance(){
-        return new Promise(async(resolve,reject)=>{
-            try{
+    getCurrentBalance() {
+        return new Promise(async (resolve, reject) => {
+            try {
                 let balance = await this.getCurrentLibrary().getCurrentBalance();
 
                 resolve(balance);
-            }catch (e){
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+
+    generateMnemonic() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await this.credentials.generateMnemonic();
+                resolve(result);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    importMnemonic(mnemonic) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await this.credentials.importMnemonic(mnemonic);
+
+                resolve(result);
+            } catch (e) {
                 reject(e);
             }
         })

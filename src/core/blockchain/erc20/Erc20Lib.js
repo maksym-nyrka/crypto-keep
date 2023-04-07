@@ -11,11 +11,12 @@ const DECIMALS = 18;
 
 class Erc20Lib extends EthLib {
 
-    constructor() {
-        super();
+    constructor(app) {
+        super(app);
         this.setContract();
         this.setValidator(new EthValidator());
         this.setConverter(new EthConverter());
+        this.setApp(app);
     }
 
     composeContract() {

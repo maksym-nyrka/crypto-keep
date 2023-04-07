@@ -14,7 +14,7 @@ class Application {
     }
 
     prepareInterface() {
-        this.walletUi.prepareInterface();
+        this.walletUi.renderUi();
     }
 
     changeCurrency(currency) {
@@ -62,7 +62,32 @@ class Application {
             }
         })
     }
+
+    generateMnemonic() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await this.blockchainService.generateMnemonic();
+                resolve(result);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    importMnemonic(mnemonic) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await this.blockchainService.importMnemonic(mnemonic);
+                this.prepareInterface();
+                console.log("importMnemonic" ,this)
+                resolve(result);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
 }
 
-let app = new Application();
-app.prepareInterface();
+new Application();
+// app.prepareInterface();
+// alert("Please insert mnemonic");

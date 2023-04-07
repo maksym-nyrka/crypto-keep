@@ -3,14 +3,24 @@ const staticValidator = new Validator();
 
 class AbstractCurrencyLibrary {
 
-    constructor(provider, validator, converter) {
+    constructor(app, provider, validator, converter) {
+        staticValidator.validateObject(app, "app");
         staticValidator.validateObject(provider, "provider");
         staticValidator.validateObject(validator, "validator");
         staticValidator.validateObject(converter, "converter");
 
+        this.setApp(app);
         this.setProvider(provider);
         this.setValidator(validator);
         this.setConverter(converter);
+    }
+
+    setApp(app) {
+        this.app = app;
+    }
+
+    getApp() {
+        return this.app;
     }
 
     getProvider() {
@@ -37,10 +47,15 @@ class AbstractCurrencyLibrary {
         this.validator = validator;
     }
 
+    getCredentials(){
+        return this.app.blockchainService.credentials;
+    }
+
     getCurrentAddress() {
         return new Promise(async (resolve, reject) => {
             try {
-                let address = await this.getAddress();
+                let address = await this.getCredentials().getAddress();
+                console.log("AbstractCurrencyLib getAddress",address)
                 resolve(address);
             } catch (e) {
                 reject(e);
@@ -51,7 +66,7 @@ class AbstractCurrencyLibrary {
     getCurrentBalance() {
         return new Promise(async (resolve, reject) => {
             try {
-                let address = await this.getAddress();
+                let address = await this.getCurrentAddress();
                 let balance = await this.getBalance(address);
                 this.getValidator().validateNumber(balance);
 
@@ -75,7 +90,8 @@ class AbstractCurrencyLibrary {
     getCurrentPrivateKey() {
         return new Promise(async (resolve, reject) => {
             try {
-                const privateKey = await this.getPrivateKey();
+                let privateKey = await this.getCredentials().getPrivateKey();
+                console.log("AbstractCurrencyLib privateKey",privateKey)
                 this.getValidator().validateString(privateKey);
 
                 resolve(privateKey);

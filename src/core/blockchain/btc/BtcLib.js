@@ -5,7 +5,7 @@ const BlockcypherProvider = require("./BlockcypherProvider");
 const BtcValidator = require("../../validators/blockchain/BtcValidator");
 const BtcConverter = require("../../helpers/BtcConverter");
 
-const BTC_ADDRESS = process.env.BTC_ADDRESS;
+// const BTC_ADDRESS = process.env.BTC_ADDRESS;
 const BTC_WIF = process.env.BTC_WIF;
 const BTC_NETWORK = networks.testnet;
 
@@ -16,18 +16,18 @@ class BtcLib extends AbstractCurrencyLibrary {
         let converter = new BtcConverter();
         let provider = new BlockcypherProvider(app, validator, converter);
 
-        super(provider, validator, converter);
+        super(app, provider, validator, converter);
     }
 
-    getAddress() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                resolve(BTC_ADDRESS);
-            } catch (e) {
-                reject(e);
-            }
-        })
-    };
+    // getAddress() {
+    //     return new Promise(async (resolve, reject) => {
+    //         try {
+    //             resolve(BTC_ADDRESS);
+    //         } catch (e) {
+    //             reject(e);
+    //         }
+    //     })
+    // };
 
     getBalance(address) {
         return new Promise(async (resolve, reject) => {
@@ -66,7 +66,8 @@ class BtcLib extends AbstractCurrencyLibrary {
         return new Promise(async (resolve, reject) => {
             try {
                 console.log("btc lib createSignRawTx");
-                let keyring = await ECPair.fromWIF(BTC_WIF, BTC_NETWORK);
+                let wif = await this.getCurrentPrivateKey();
+                let keyring = await ECPair.fromWIF(wif, BTC_NETWORK);
                 console.log("keyring", keyring);
                 console.log("btcLib txb")
                 let txb = new TransactionBuilder(BTC_NETWORK);
@@ -87,7 +88,8 @@ class BtcLib extends AbstractCurrencyLibrary {
     _formatTransactionParameters(to, amount) {
         return new Promise(async (resolve, reject) => {
             try {
-                let from = await this.getAddress();
+                let from = await this.getCurrentAddress();
+                console.log("_formatTransactionParameters from", from)
                 let fee = await this.getFee();
                 console.log('formatTxParams fee', fee)
                 amount = parseFloat(amount);
