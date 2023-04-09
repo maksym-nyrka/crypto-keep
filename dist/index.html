@@ -10,97 +10,100 @@
     <link href="styles/styles.css" rel="stylesheet">
 </head>
 
-<body class="d-flex h-100 text-center text-white bg-dark">
+<body class="text-center text-white bg-dark">
 
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    <header class="mb-auto">
-        <div>
-            <h3 class="float-md-start mb-0">CryptoKeep</h3>
-            <nav class="nav nav-masthead justify-content-center float-md-end">
-                <a class="currency-select nav-link active" data-value="ETH" aria-current="page" href="#">ETH</a>
-                <a class="currency-select nav-link" data-value="ERC20" href="#">ERC20</a>
-                <a class="currency-select nav-link" data-value="BTC" href="#">BTC</a>
+<header>
+    <div>
+        <h3 id="site_name" class="float-md-start mb-0">CryptoKeep</h3>
+        <nav id="header_nav" class="nav nav-masthead justify-content-center">
+            <a class="currency-select nav-link active" data-value="ETH" aria-current="page" href="#">ETH</a>
+            <a class="currency-select nav-link" data-value="MKN" href="#">MKN</a>
+            <a class="currency-select nav-link" data-value="BTC" href="#">BTC</a>
+        </nav>
+    </div>
+</header>
 
-<!--                <span>-->
-<!--                    <input id="import_mnemonic" name="import-mnemonic" placeholder="Import your mnemonic">-->
-<!--                    <button id="generate_mnemonic">Generate</button>-->
-<!--                </span>-->
-            </nav>
-        </div>
-    </header>
-
-    <main id="main" class="px-3 container">
-        <h1 class="currency_name">currency_name</h1>
-        <p class="lead">
-            <span>Address:</span> <span id="currency_address">currency_address</span>
-        </p>
-        <p class="lead">
-            <span id="currency_balance">currency_balance</span> <span class="currency_name">currency_name</span>
-        </p>
-        <br>
-        <br>
-        <br>
-        <h4>Send currency:</h4>
-
-        <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text">Receiver</span>
-            <input id="receiver_input" type="text" class="form-control">
+<content>
+    <main id="main" class="cover-container w-100 h-100 p-3 mx-auto flex-column">
+        <div id="currency_info">
+            <span>
+                <span id="currency_full_name">currency_full_name</span>
+                <img id="currency_image">
+            </span>
+            <p class="lead">
+                <span>Address:</span> <span id="currency_address">currency_address</span>
+            </p>
+            <p class="lead">
+                <span id="currency_balance">currency_balance</span> <span class="currency_name">currency_name</span>
+            </p>
         </div>
 
-        <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text">Amount</span>
-            <input id="amount_input" type="number" class="form-control">
-        </div>
+        <div id="send_currency">
+            <h4>Send currency:</h4>
 
-        <p class="lead">
-            <a href="#" id="send_button" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Send</a>
-        </p>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Receiver</span>
+                <input id="receiver_input" type="text" class="form-control">
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Amount</span>
+                <input id="amount_input" type="number" class="form-control">
+            </div>
+
+            <p class="lead">
+                <a href="#" id="send_button" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Send</a>
+            </p>
+        </div>
     </main>
 
     <welcome id="welcome">
-        <h1 >Welcome to CryptoKeep!</h1>
-        <span>Non-custodial multicurrency wallet.</span>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p class="lead">
-            <span>Login via mnemonic to start using it:</span>
-        </p>
-        <p class="lead">
-            <a href="#" id="login_button" class="btn btn-lg btn-secondary fw-bold border-white bg-white" data-bs-toggle="modal" data-bs-target="#myModal">Login</a>
-        </p>
+        <div id="welcome_text">
+            <h1>Welcome to CryptoKeep!</h1>
+            <p class="lead">
+                <span>Non-custodial multicurrency wallet.</span>
+            </p>
+        </div>
+        <div id="login">
+            <p class="lead">
+                <span>Login via mnemonic to start using it:</span>
+            </p>
+            <p class="lead">
+                <a href="#" id="login_button" class="btn btn-lg btn-secondary fw-bold border-white bg-white"
+                   data-bs-toggle="modal" data-bs-target="#myModal">Login</a>
+            </p>
+        </div>
     </welcome>
+</content>
 
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+<div class="modal fade" id="myModal" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
 
-                <div class="modal-header">
-                    <h4 class="modal-title">Login</h4>
-                    <button id="close_modal" type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+            <div class="modal-header">
+                <h4 class="modal-title">Login</h4>
+                <button id="close_modal" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
 
-                <div class="modal-body">
-                    <p>If you don't have a mnemonic phrase you can generate a new one.</p>
-                    <p>Or you can type existing one:</p>
-                    <input style="height: 30px; width: 650px" id="import_mnemonic" name="import-mnemonic" placeholder="your mnemonic phrase" autocomplete="off">
-                    <button id="generate_mnemonic">Generate new</button>
-                    <p>We don't store your seed phrases, so remember to save it before proceeding!</p>
-                </div>
+            <div class="modal-body">
+                <p>If you don't have a mnemonic phrase you can generate a new one.</p>
+                <p>Or you can type existing one:</p>
+                <input id="import_mnemonic" name="import-mnemonic"
+                       placeholder="your mnemonic phrase" autocomplete="off">
+                <button id="generate_mnemonic">Generate new</button>
+                <p>We don't store your seed phrases, so remember to save it before proceeding!</p>
+            </div>
 
-                <div class="modal-footer">
-                    <button id="sign_in_button" type="button" class="btn btn-light" data-bs-dismiss="modal">Sign In</button>
-                </div>
+            <div class="modal-footer">
+                <button id="sign_in_button" type="button" class="btn btn-light" data-bs-dismiss="modal">Sign In</button>
             </div>
         </div>
     </div>
-    <footer class="mt-auto text-white-50">
-        <p>Made by <a href="mailto:maksym.nyrka@gmail.com" class="text-white">maksym.nyrka</a></p>
-    </footer>
+</div>
+
+<footer class="mt-auto text-white-50">
+    <p>Made by <a href="mailto:maksym.nyrka@gmail.com" class="text-white">maksym.nyrka</a></p>
+</footer>
 </div>
 
 

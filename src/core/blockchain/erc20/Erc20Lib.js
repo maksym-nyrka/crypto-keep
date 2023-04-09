@@ -3,7 +3,6 @@ const Erc20Converter = require("../../helpers/Erc20Converter");
 
 const ERC20_ABI = require("./erc20_abi");
 const EthValidator = require("../../validators/blockchain/EthValidator");
-const EthConverter = require("../../helpers/EthConverter");
 
 const CONTRACT_ADDRESS = process.env.ERC20_ADDRESS;
 const GAS_LIMIT = 300000;
@@ -15,7 +14,7 @@ class Erc20Lib extends EthLib {
         super(app);
         this.setContract();
         this.setValidator(new EthValidator());
-        this.setConverter(new EthConverter());
+        this.setConverter(new Erc20Converter());
         this.setApp(app);
     }
 
@@ -52,6 +51,26 @@ class Erc20Lib extends EthLib {
 
     getGasLimit() {
         return GAS_LIMIT;
+    }
+
+    getCurrencyFullName() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                resolve("MKN Token");
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    getCurrencyImage() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                resolve("/dist/images/ethereum_token.png");
+            } catch (e) {
+                reject(e);
+            }
+        })
     }
 
     sendCurrency(to, amount) {

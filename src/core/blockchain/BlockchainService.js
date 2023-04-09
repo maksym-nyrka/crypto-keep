@@ -16,7 +16,7 @@ class BlockchainService {
 
         this.libraries = {
             "ETH": eth,
-            "ERC20": erc20,
+            "MKN": erc20,
             "BTC": btc,
         };
         console.log("libraries",this.libraries);
@@ -39,6 +39,28 @@ class BlockchainService {
         })
     }
 
+    getCurrencyFullName() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let name = await this.getCurrentLibrary().getCurrencyFullName();
+                resolve(name);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    getCurrencyImage() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let image = await this.getCurrentLibrary().getCurrencyImage();
+                resolve(image);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -46,6 +68,7 @@ class BlockchainService {
 
                 resolve(result);
             } catch (e) {
+                alert(e);
                 reject(e);
             }
         })

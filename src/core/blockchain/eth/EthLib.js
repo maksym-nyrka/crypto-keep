@@ -34,6 +34,26 @@ class EthLib extends AbstractCurrencyLibrary {
         })
     }
 
+    getCurrencyFullName() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                resolve("Ethereum");
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    getCurrencyImage() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                resolve("/dist/images/ethereum.png");
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {
             try {

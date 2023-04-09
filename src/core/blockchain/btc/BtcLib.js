@@ -33,6 +33,26 @@ class BtcLib extends AbstractCurrencyLibrary {
         })
     }
 
+    getCurrencyFullName() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                resolve("Bitcoin");
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    getCurrencyImage() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                resolve("/dist/images/bitcoin.png");
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {
             try {

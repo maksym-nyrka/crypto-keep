@@ -8,6 +8,8 @@ class Renderer {
         this.renderCurrency();
         this.renderBalance();
         this.renderAddress();
+        this.renderFullName();
+        this.renderImage();
     }
 
     renderCurrency() {
@@ -30,6 +32,22 @@ class Renderer {
 
         this.app.getCurrentAddress().then(address => {
             addressElement.innerText = String(address);
+        });
+    }
+
+    renderFullName() {
+        const fullNameElement = document.getElementById("currency_full_name");
+
+        this.app.getCurrencyFullName().then(fullName => {
+            fullNameElement.innerText = String(fullName);
+        });
+    }
+
+    renderImage() {
+        const imageElement = document.getElementById("currency_image");
+
+        this.app.getCurrencyImage().then(image => {
+            imageElement.src = String(image);
         });
     }
 }

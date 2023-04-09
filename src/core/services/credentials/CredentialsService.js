@@ -17,7 +17,7 @@ class CredentialsService {
         this.protocols = {
             BTC: btc,
             ETH: eth,
-            ERC20: erc20
+            "MKN": erc20
         }
     }
 

@@ -82,7 +82,8 @@ class ListenerSetter {
     setSignInButtonListener() {
         document.getElementById("sign_in_button").addEventListener("click", async () => {
             document.getElementById("welcome").style.display = "none";
-            document.getElementById("main").style.display = "block";
+            document.getElementById("main").style.display = "flex";
+            document.getElementById("header_nav").style.display = "flex";
             this.app.prepareInterface();
         })
     }

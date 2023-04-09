@@ -52,6 +52,28 @@ class Application {
         })
     }
 
+    getCurrencyFullName() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let name = await this.blockchainService.getCurrencyFullName();
+                resolve(name);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    getCurrencyImage() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let image = await this.blockchainService.getCurrencyImage();
+                resolve(image);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {
             try {

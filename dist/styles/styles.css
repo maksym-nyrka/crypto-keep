@@ -1,8 +1,10 @@
-/* Base structure */
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Pixels&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Oswald:wght@300&family=Plus+Jakarta+Sans&family=Space+Mono&display=swap');
 
 body {
-  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+  /*text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);*/
+  /*box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);*/
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .cover-container {
@@ -35,9 +37,10 @@ body {
 }
 
 body {
-  background-image: url('astronaut.jpg');
+  background-image: url('../images/astronaut.jpg');
   background-repeat:no-repeat;
   background-size:cover;
+  background-attachment: fixed;
 }
 
 .input-group-text {
@@ -55,7 +58,7 @@ body {
 }
 
 main {
-  display: none;
+  display: none; !important;
 }
 
 .modal-footer {
@@ -68,4 +71,79 @@ main {
 
 .modal-content {
   background-color: rgba(95,173, 220, 0.4);
+}
+
+body {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid:
+        "header" 100px
+        "content" 1fr
+        "footer" 50px
+        / 1fr;
+  gap: 16px;
+}
+
+header {
+  grid-area: header;
+  align-self: center;
+  margin-left: 100px;
+}
+
+content {
+  grid-area: content;
+}
+
+footer {
+  grid-area: footer;
+}
+
+#site_name {
+  /*font-family: 'Rubik Pixels', cursive;*/
+  font-family: 'Orbitron', sans-serif;
+  font-size: 50px;
+}
+
+welcome {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: translateY(-50%);
+  text-shadow: 0 .2rem .2rem rgba(0, 0, 0, .5);
+
+}
+
+
+#welcome_text {
+  margin-bottom: 120px;
+}
+
+#header_nav {
+  display: none;
+}
+
+#currency_info {
+  margin-bottom: 50px;
+}
+
+#currency_full_name {
+  font-size: 20px;
+}
+
+#currency_image {
+  height: 60px;
+}
+
+#receiver_input,
+#amount_input {
+  opacity: 0.5;
+}
+
+#import_mnemonic {
+  height: 30px;
+  width: 650px;
 }
