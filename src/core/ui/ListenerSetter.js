@@ -6,8 +6,10 @@ class ListenerSetter {
 
     setEventListeners() {
         this.setSendListener();
+
         this.setChangeCurrencyListener();
         this.setActiveCurrencyListener();
+
         this.setMnemonicListeners();
         this.setSignInButtonListener();
         this.setLoginButtonListener();
