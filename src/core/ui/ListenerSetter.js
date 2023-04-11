@@ -6,14 +6,12 @@ class ListenerSetter {
 
     setEventListeners() {
         this.setSendListener();
-
         this.setChangeCurrencyListener();
         this.setActiveCurrencyListener();
-
         this.setMnemonicListeners();
         this.setSignInButtonListener();
-        this.setLoginButtonListener();
-        this.setCloseModalButtonListener();
+        this.setOpenModalListener();
+        this.setCloseModalListener();
     }
 
     setSendListener() {
@@ -44,7 +42,7 @@ class ListenerSetter {
         const currencyLinks = document.querySelectorAll('.currency-select');
 
         currencyLinks.forEach(link => {
-                link.addEventListener('click', this.toggleCurrencyActive)
+            link.addEventListener('click', this.toggleCurrencyActive)
         });
     }
 
@@ -57,13 +55,13 @@ class ListenerSetter {
         this.classList.toggle('active');
     }
 
-    setMnemonicListeners(){
+    setMnemonicListeners() {
         this.setGenerateMnemonicListener();
         this.setImportMnemonicOnInputListener();
     }
 
-    setGenerateMnemonicListener(){
-        document.getElementById("generate_mnemonic").addEventListener("click",async()=>{
+    setGenerateMnemonicListener() {
+        document.getElementById("generate_mnemonic").addEventListener("click", async () => {
             let mnemonic = await this.app.generateMnemonic();
             const mnemonicInput = document.getElementById("import_mnemonic");
             mnemonicInput.value = mnemonic;
@@ -72,8 +70,8 @@ class ListenerSetter {
         })
     }
 
-    setImportMnemonicOnInputListener(){
-        document.getElementById("import_mnemonic").addEventListener("input",async()=>{
+    setImportMnemonicOnInputListener() {
+        document.getElementById("import_mnemonic").addEventListener("input", async () => {
             let element = event.target || event.srcElement;
             let mnemonic = element.value;
             console.log(mnemonic);
@@ -90,15 +88,19 @@ class ListenerSetter {
         })
     }
 
-    setLoginButtonListener() {
+    setOpenModalListener() {
         document.getElementById("login_button").addEventListener("click", async () => {
             document.getElementById("welcome").style.display = "none";
         })
     }
 
-    setCloseModalButtonListener() {
-        document.getElementById("close_modal").addEventListener("click", async () => {
-            document.getElementById("welcome").style.display = "block";
+    setCloseModalListener() {
+        document.getElementById("myModal").addEventListener("hidden.bs.modal", async () => {
+            if (document.getElementById("main").style.display === "flex") {
+                document.getElementById("welcome").style.display = "none";
+            } else {
+                document.getElementById("welcome").style.display = "block";
+            }
         })
     }
 }

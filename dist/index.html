@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-100">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,22 +78,22 @@
     </welcome>
 </content>
 
-<div class="modal fade" id="myModal" data-bs-backdrop="static">
+<div class="modal fade" id="myModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <div class="modal-header">
                 <h4 class="modal-title">Login</h4>
-                <button id="close_modal" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
+                <p>Please enter the mnemonic:</p>
                 <p>If you don't have a mnemonic phrase you can generate a new one.</p>
-                <p>Or you can type existing one:</p>
                 <input id="import_mnemonic" name="import-mnemonic"
                        placeholder="your mnemonic phrase" autocomplete="off">
-                <button id="generate_mnemonic">Generate new</button>
-                <p>We don't store your seed phrases, so remember to save it before proceeding!</p>
+                <button id="generate_mnemonic" class="btn btn-light" >Generate new</button>
+                <p>Site doesn't store your seed phrases, so remember to save it before proceeding!</p>
             </div>
 
             <div class="modal-footer">
