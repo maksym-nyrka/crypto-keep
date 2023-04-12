@@ -5,8 +5,8 @@ const NETWORK = require('/src/core/blockchain/ltc/LtcNetworks')["main"];
 
 class LtcWallet extends BtcWallet {
 
-    getDerivePath() {
-        return `m/44'/2'/0'/0/0`;
+    getDerivationPath() {
+        return isProduction ? `m/44'/2'/0'/0/0` : `m/44'/1'/0'/0/0`;
     }
 
     getNetwork() {
