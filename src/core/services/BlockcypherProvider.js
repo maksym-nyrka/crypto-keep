@@ -1,5 +1,4 @@
-const BTCAPIPROVIDER = "https://api.blockcypher.com/v1/btc";
-const NETWORK = 'test3';
+const BLOCKCYPHER_PROVIDER_URL = "https://api.blockcypher.com/v1";
 const API_TOKEN = process.env.BLOCKCYPHER_API_TOKEN;
 const SEND = "SEND";
 const BALANCE = "BALANCE";
@@ -7,7 +6,7 @@ const FEE = "FEE";
 const GET_UTXO = "GET_UTXO";
 const PROBLEM_WITH_NODE = "PROBLEM_WITH_NODE";
 const WRONG_FEE = "WRONG FEE";
-const TXSIZE = 0.512;//512 bytes
+const TXSIZE = 0.512; //512 bytes
 
 class BlockcypherProvider {
     constructor(app, validator, converter) {
@@ -16,9 +15,16 @@ class BlockcypherProvider {
         this.converter = converter;
     }
 
+    getCoinName() {
+        throw "getCoin() is not implemented";
+    }
+
+    getNetworkName() {
+        throw "getCoin() is not implemented";
+    }
 
     urlCompose(action, parameters) {
-        let base = `${BTCAPIPROVIDER}/${NETWORK}`;
+        let base = `${BLOCKCYPHER_PROVIDER_URL}/${this.getCoinName()}/${this.getNetworkName()}`;
         let relativeUrl = ''
         switch (action) {
             case BALANCE:

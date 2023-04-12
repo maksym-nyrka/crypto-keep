@@ -1,20 +1,22 @@
 const {ECPair, TransactionBuilder, networks} = require('bitcoinjs-lib');
 
 const AbstractCurrencyLibrary = require("../AbstractCurrencyLibrary");
-const BlockcypherProvider = require("./BlockcypherProvider");
 const BtcValidator = require("../../validators/blockchain/BtcValidator");
-const BtcConverter = require("../../helpers/BtcConverter");
-
-const BTC_NETWORK = networks.testnet;
+const BtcConverter = require("../../converters/BtcConverter");
+const BitcoinBlockcypherProvider = require("./BitcoinBlockcypherProvider");
 
 class BtcLib extends AbstractCurrencyLibrary {
 
     constructor(app) {
         let validator = new BtcValidator();
         let converter = new BtcConverter();
-        let provider = new BlockcypherProvider(app, validator, converter);
+        let provider = new BitcoinBlockcypherProvider(app, validator, converter);
 
         super(app, provider, validator, converter);
+    }
+
+    getNetwork() {
+        return this.app.isProduction() ? networks.bitcoin : networks.testnet;
     }
 
     getBalance(address) {
@@ -75,10 +77,10 @@ class BtcLib extends AbstractCurrencyLibrary {
             try {
                 console.log("btc lib createSignRawTx");
                 let wif = await this.getCurrentPrivateKey();
-                let keyring = await ECPair.fromWIF(wif, BTC_NETWORK);
+                let keyring = await ECPair.fromWIF(wif, this.getNetwork());
                 console.log("keyring", keyring);
                 console.log("btcLib txb")
-                let txb = new TransactionBuilder(BTC_NETWORK);
+                let txb = new TransactionBuilder(this.getNetwork());
                 console.log("btcLib addSignedUtxos");
                 txb = await this.provider.addSignedUtxos(keyring, txb, txParams["from"], txParams["to"], txParams["amount"], txParams["fee"]);
                 console.log("btcLib txb")

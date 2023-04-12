@@ -1,18 +1,26 @@
 const AbstractCurrencyWallet = require('./AbstractCurrencyWallet');
 const {payments, networks} = require('bitcoinjs-lib');
-const NETWORK = networks.testnet;
 const bip39 = require("bip39");
 const bip32 = require("bip32");
+const isProduction = require("../../helpers/isProduction");
 
 class BtcWallet extends AbstractCurrencyWallet {
+
+    getDerivePath() {
+        return `m/44'/1'/0'/0/0`;
+    }
+
+    getNetwork() {
+        return isProduction ? networks.bitcoin : networks.testnet;
+    }
 
     provideAddress(mnemonic) {
         return new Promise(async (resolve, reject) => {
             try {
                 const seed = await bip39.mnemonicToSeed(mnemonic);
-                const root = bip32.fromSeed(seed, NETWORK);
-                const child = root.derivePath(`m/44'/1'/0'/0/0`);
-                const {address} = payments.p2pkh({pubkey: child.publicKey, network: NETWORK});
+                const root = bip32.fromSeed(seed, this.getNetwork());
+                const child = root.derivePath(this.getDerivePath());
+                const {address} = payments.p2pkh({pubkey: child.publicKey, network: this.getNetwork()});
                 resolve(address);
             } catch (e) {
                 reject(e);
@@ -24,8 +32,8 @@ class BtcWallet extends AbstractCurrencyWallet {
         return new Promise(async (resolve, reject) => {
             try {
                 const seed = await bip39.mnemonicToSeed(mnemonic);
-                const root = bip32.fromSeed(seed, NETWORK);
-                const child = root.derivePath(`m/44'/1'/0'/0/0`);
+                const root = bip32.fromSeed(seed, this.getNetwork());
+                const child = root.derivePath(this.getDerivePath());
                 const privateKey = child.toWIF();
                 console.log("providePrivateKey(mnemonic)", privateKey);
                 resolve(privateKey);

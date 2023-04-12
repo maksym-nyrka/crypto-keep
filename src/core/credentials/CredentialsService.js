@@ -2,7 +2,9 @@ const MnemonicGenerator = require("./MnemonicGenerator");
 const EthWallet = require('./protocols/EthWallet');
 const Erc20Wallet = require('./protocols/Erc20Wallet');
 const BtcWallet = require('./protocols/BtcWallet');
+const LtcWallet = require('./protocols/LtcWallet');
 const Validator = require("/src/core/validators/Validator");
+const BnbWallet = require("./protocols/BnbWallet");
 
 class CredentialsService {
 
@@ -13,11 +15,15 @@ class CredentialsService {
         let eth = new EthWallet();
         let erc20 = new Erc20Wallet();
         let btc = new BtcWallet();
+        let ltc = new LtcWallet();
+        let bnb = new BnbWallet();
         this.mnemonic = "";
         this.protocols = {
             BTC: btc,
             ETH: eth,
-            "MKN": erc20
+            MKN: erc20,
+            LTC: ltc,
+            BNB: bnb,
         }
     }
 

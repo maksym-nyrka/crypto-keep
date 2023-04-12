@@ -1,22 +1,38 @@
 const Web3 = require("web3");
 const Transaction = require('ethereumjs-tx');
-const EthConverter = require("../../helpers/EthConverter");
+const EthConverter = require("../../converters/EthConverter");
 const AbstractCurrencyLibrary = require("../AbstractCurrencyLibrary");
 const EthValidator = require("../../validators/blockchain/EthValidator");
 
-const PROVIDER_URL = process.env.PROVIDER_URL;
+const INFURA_PROVIDER_URL = `https://network.infura.io/v3/`;
 const GWEI = 10 ** 9;
 const GAS_PRICE = 70 * GWEI;
 const GAS_LIMIT = 21000;
+const MAINNET_CHAIN_ID = 1;
+const SEPOLIA_CHAIN_ID = 11155111;
+const MAINNET_NETWORK = "mainnet";
+const SEPOLIA_NETWORK = "sepolia";
 
 class EthLib extends AbstractCurrencyLibrary {
 
     constructor(app) {
-        console.log("EthLib app",app);
-        let web3 = new Web3(new Web3.providers.HttpProvider(PROVIDER_URL));
+        console.log("EthLib app", app);
         let validator = new EthValidator();
         let converter = new EthConverter();
-        super(app, web3, validator, converter);
+        super(app, null, validator, converter);
+        let web3 = new Web3(new Web3.providers.HttpProvider(this.getProviderUrl()));
+        this.setProvider(web3);
+    }
+
+    getProviderUrl() {
+        const network = this.app.isProduction() ? MAINNET_NETWORK : SEPOLIA_NETWORK;
+
+        return `${INFURA_PROVIDER_URL}${process.env.INFURA_API_TOKEN}`
+            .replace('network', network);
+    }
+
+    getChainId() {
+        return this.app.isProduction() ? MAINNET_CHAIN_ID : SEPOLIA_CHAIN_ID;
     }
 
     getBalance(address) {
@@ -93,6 +109,9 @@ class EthLib extends AbstractCurrencyLibrary {
                 let gasLimit = this.getGasLimit();
                 this.getValidator().validateNumber(gasLimit);
 
+                let chainId = this.getChainId();
+                this.getValidator().validateNumber(chainId);
+
                 value = await this.fromDecimals(value);
 
                 let txParams = {
@@ -104,6 +123,7 @@ class EthLib extends AbstractCurrencyLibrary {
                     "gasLimit": gasLimit,
                     "nonce": nonce,
                     "data": data,
+                    "chainId": chainId
                 };
 
                 resolve(txParams);

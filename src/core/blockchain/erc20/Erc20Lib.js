@@ -1,10 +1,10 @@
 const EthLib = require("../eth/EthLib");
-const Erc20Converter = require("../../helpers/Erc20Converter");
+const Erc20Converter = require("../../converters/Erc20Converter");
 
 const ERC20_ABI = require("./erc20_abi");
 const EthValidator = require("../../validators/blockchain/EthValidator");
 
-const CONTRACT_ADDRESS = process.env.ERC20_ADDRESS;
+const MKN_TOKEN_ADDRESS = "0x3fb9fc5d42891Fa52e8dcBA892a3a9232d6A3CA4";
 const GAS_LIMIT = 300000;
 const DECIMALS = 18;
 
@@ -27,7 +27,7 @@ class Erc20Lib extends EthLib {
     }
 
     getContractAddress() {
-        return CONTRACT_ADDRESS;
+        return MKN_TOKEN_ADDRESS;
     }
 
     getContract() {
