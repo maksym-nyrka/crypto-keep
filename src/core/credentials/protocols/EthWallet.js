@@ -7,7 +7,7 @@ const isProduction = require("../../helpers/isProduction");
 class EthWallet extends AbstractCurrencyWallet {
 
     getDerivationPath() {
-        return isProduction ? `m/44'/60'/0'/0/0` : `m/44'/1'/0'/0/0`;
+        return `m/44'/60'/0'/0/0`;
     }
 
     provideAddress(mnemonic) {
