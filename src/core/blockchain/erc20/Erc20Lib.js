@@ -3,19 +3,30 @@ const Erc20Converter = require("../../converters/Erc20Converter");
 
 const ERC20_ABI = require("./erc20_abi");
 const EthValidator = require("../../validators/blockchain/EthValidator");
+const Web3 = require("web3");
 
 const MKN_TOKEN_ADDRESS = "0x3fb9fc5d42891Fa52e8dcBA892a3a9232d6A3CA4";
 const GAS_LIMIT = 300000;
 const DECIMALS = 18;
 
+const INFURA_PROVIDER_URL = `https://network.infura.io/v3/`;
+const SEPOLIA_NETWORK = "sepolia";
+
 class Erc20Lib extends EthLib {
 
     constructor(app) {
         super(app);
+        let web3 = new Web3(new Web3.providers.HttpProvider(this.getProviderUrl()));
+        this.setProvider(web3);
         this.setContract();
         this.setValidator(new EthValidator());
         this.setConverter(new Erc20Converter());
         this.setApp(app);
+    }
+
+    getProviderUrl() {
+        return `${INFURA_PROVIDER_URL}${process.env.INFURA_API_TOKEN}`
+            .replace('network', SEPOLIA_NETWORK);
     }
 
     composeContract() {
@@ -56,7 +67,7 @@ class Erc20Lib extends EthLib {
     getCurrencyFullName() {
         return new Promise(async (resolve, reject) => {
             try {
-                resolve("MKN Token");
+                resolve("MKN Token (Sepolia Testnet)");
             } catch (e) {
                 reject(e);
             }
