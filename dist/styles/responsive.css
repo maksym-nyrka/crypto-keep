@@ -1,0 +1,9 @@
+@media only screen and (max-width: 767px)  {
+    #site_name {
+        font-size: 40px;
+    }
+
+    #currency_address {
+        word-break: break-all;
+    }
+}
