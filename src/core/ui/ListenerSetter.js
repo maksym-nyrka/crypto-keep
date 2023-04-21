@@ -65,7 +65,7 @@ class ListenerSetter {
             let mnemonic = await this.app.generateMnemonic();
             const mnemonicInput = document.getElementById("import_mnemonic");
             mnemonicInput.value = mnemonic;
-            console.log(mnemonic);
+            //console.log(mnemonic);
             this.app.importMnemonic(mnemonic);
         })
     }
@@ -74,7 +74,7 @@ class ListenerSetter {
         document.getElementById("import_mnemonic").addEventListener("input", async () => {
             let element = event.target || event.srcElement;
             let mnemonic = element.value;
-            console.log(mnemonic);
+            //console.log(mnemonic);
             this.app.importMnemonic(mnemonic);
         })
     }

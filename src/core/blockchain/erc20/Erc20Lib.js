@@ -67,7 +67,7 @@ class Erc20Lib extends EthLib {
     getCurrencyFullName() {
         return new Promise(async (resolve, reject) => {
             try {
-                resolve("MKN Token (Sepolia Testnet)");
+                resolve("MKN Token");
             } catch (e) {
                 reject(e);
             }

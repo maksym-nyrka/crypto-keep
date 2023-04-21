@@ -21,7 +21,7 @@ class LtcLib extends BtcLib {
     getCurrencyFullName() {
         return new Promise(async (resolve, reject) => {
             try {
-                resolve("Litecoin");
+                resolve("Litecoin (Mainnet)");
             } catch (e) {
                 reject(e);
             }

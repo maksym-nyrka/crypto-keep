@@ -106,7 +106,7 @@ class Application {
             try {
                 let result = await this.blockchainService.importMnemonic(mnemonic);
                 this.prepareInterface();
-                console.log("importMnemonic" ,this)
+                //console.log("importMnemonic" ,this)
                 resolve(result);
             } catch (e) {
                 reject(e);

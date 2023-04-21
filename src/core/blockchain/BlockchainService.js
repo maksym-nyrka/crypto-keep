@@ -10,9 +10,9 @@ class BlockchainService {
     constructor(app) {
         this.app = app;
         this.credentials = new CredentialService(app);
-        console.log("BlockchainService app",app);
+        //console.log("BlockchainService app",app);
         let eth = new EthLib(app);
-        console.log("BlockchainService app2",app);
+        //console.log("BlockchainService app2",app);
         let erc20 = new Erc20Lib(app);
         let btc = new BtcLib(app);
         let ltc = new LtcLib(app);
@@ -25,11 +25,11 @@ class BlockchainService {
             "LTC": ltc,
             "BNB": bnb,
         };
-        console.log("libraries",this.libraries);
+        //console.log("libraries",this.libraries);
     }
 
     getCurrentLibrary() {
-        console.log("getCurrentLibrary",this.app.getCurrency(),this.libraries[this.app.getCurrency()])
+        //console.log("getCurrentLibrary",this.app.getCurrency(),this.libraries[this.app.getCurrency()])
         return this.libraries[this.app.getCurrency()];
     }
 

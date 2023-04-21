@@ -90,7 +90,7 @@ header {
   header {
     margin-left: 100px;
   }
-} 
+}
 
 content {
   grid-area: content;
@@ -129,7 +129,7 @@ welcome {
 }
 
 #currency_address {
-  word-wrap: wrap;
+  word-wrap: break-word;
   display: block;
   max-width: 100%;
 }
@@ -151,4 +151,8 @@ welcome {
   height: 30px;
   width: 100%;
   margin-bottom: 7px;
+}
+
+.currency-address {
+  margin-top: 8px;
 }

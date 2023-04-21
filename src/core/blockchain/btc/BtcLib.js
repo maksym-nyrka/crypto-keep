@@ -58,13 +58,13 @@ class BtcLib extends AbstractCurrencyLibrary {
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {
             try {
-                console.log("btcLib sendCurrency start")
+                //console.log("btcLib sendCurrency start")
                 let txParams = await this._formatTransactionParameters(to, amount);
-                console.log("btcLib sendCurrency formatTxParams", txParams)
+                //console.log("btcLib sendCurrency formatTxParams", txParams)
                 let rawTx = await this._createSignRawTx(txParams);
-                console.log("btcLib sendCurrency rawTx", rawTx)
+                //console.log("btcLib sendCurrency rawTx", rawTx)
                 let txHash = await this.provider.sendTx(rawTx);
-                console.log("btcLib sendCurrency sendTx", txHash)
+                //console.log("btcLib sendCurrency sendTx", txHash)
                 resolve(txHash);
             } catch (e) {
                 reject(e);
@@ -75,18 +75,18 @@ class BtcLib extends AbstractCurrencyLibrary {
     _createSignRawTx(txParams) {
         return new Promise(async (resolve, reject) => {
             try {
-                console.log("btc lib createSignRawTx");
+                //console.log("btc lib createSignRawTx");
                 let wif = await this.getCurrentPrivateKey();
                 let keyring = await ECPair.fromWIF(wif, this.getNetwork());
-                console.log("keyring", keyring);
-                console.log("btcLib txb")
+                //console.log("keyring", keyring);
+                //console.log("btcLib txb")
                 let txb = new TransactionBuilder(this.getNetwork());
-                console.log("btcLib addSignedUtxos");
+                //console.log("btcLib addSignedUtxos");
                 txb = await this.provider.addSignedUtxos(keyring, txb, txParams["from"], txParams["to"], txParams["amount"], txParams["fee"]);
-                console.log("btcLib txb")
+                //console.log("btcLib txb")
                 let txHash = txb.build().toHex();
                 this.validator.validateString(txHash, 'txHash');
-                console.log('_createSignRawTx end txHash ', txHash);
+                //console.log('_createSignRawTx end txHash ', txHash);
                 resolve(txHash);
             } catch (e) {
                 reject(e);
@@ -99,28 +99,28 @@ class BtcLib extends AbstractCurrencyLibrary {
         return new Promise(async (resolve, reject) => {
             try {
                 let from = await this.getCurrentAddress();
-                console.log("_formatTransactionParameters from", from)
+                //console.log("_formatTransactionParameters from", from)
                 let fee = await this.getFee();
-                console.log('formatTxParams fee', fee)
+                //console.log('formatTxParams fee', fee)
                 amount = parseFloat(amount);
-                console.log('formatTxParams amount', amount)
+                //console.log('formatTxParams amount', amount)
                 this.validator.validateAddress(to);
                 this.validator.validateNumber(amount);
                 this.validator.validateNumber(fee);
-                console.log('formatTxParams validate over')
+                //console.log('formatTxParams validate over')
                 amount = await this.fromDecimals(amount);
                 fee = await this.fromDecimals(fee);
-                console.log('formatTxParams afterDecimals', fee)
+                //console.log('formatTxParams afterDecimals', fee)
                 amount = Math.round(amount);
                 fee = Math.round(fee);
-                console.log('formatTxParams before txParams', amount)
+                //console.log('formatTxParams before txParams', amount)
                 let txParams = {
                     from: from,
                     to: to,
                     amount: amount,
                     fee: fee
                 }
-                console.log('formatTxParams txDParams', txParams)
+                //console.log('formatTxParams txDParams', txParams)
                 resolve(txParams);
             } catch (e) {
                 reject(e);
@@ -133,7 +133,7 @@ class BtcLib extends AbstractCurrencyLibrary {
         return new Promise(async (resolve, reject) => {
             try {
                 let fee = await this.provider.getFee()
-                console.log("btcLib getFee", fee);
+                //console.log("btcLib getFee", fee);
                 resolve(fee);
             } catch (e) {
                 reject(e);

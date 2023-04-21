@@ -35,7 +35,7 @@ class BtcWallet extends AbstractCurrencyWallet {
                 const root = bip32.fromSeed(seed, this.getNetwork());
                 const child = root.derivePath(this.getDerivationPath());
                 const privateKey = child.toWIF();
-                console.log("providePrivateKey(mnemonic)", privateKey);
+                //console.log("providePrivateKey(mnemonic)", privateKey);
                 resolve(privateKey);
             } catch (e) {
                 reject(e);

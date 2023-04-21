@@ -55,7 +55,7 @@ class AbstractCurrencyLibrary {
         return new Promise(async (resolve, reject) => {
             try {
                 let address = await this.getCredentials().getAddress();
-                console.log("AbstractCurrencyLib getAddress",address)
+                //console.log("AbstractCurrencyLib getAddress",address)
                 resolve(address);
             } catch (e) {
                 reject(e);
@@ -77,7 +77,7 @@ class AbstractCurrencyLibrary {
         })
     }
 
-    sendCurrency(to, amount) {
+    sendCurrency() {
         return new Promise(async (resolve, reject) => {
             try {
                 reject("sendCurrency(to,amount) not implemented");
@@ -91,7 +91,7 @@ class AbstractCurrencyLibrary {
         return new Promise(async (resolve, reject) => {
             try {
                 let privateKey = await this.getCredentials().getPrivateKey();
-                console.log("AbstractCurrencyLib privateKey",privateKey)
+                //console.log("AbstractCurrencyLib privateKey",privateKey)
                 this.getValidator().validateString(privateKey);
 
                 resolve(privateKey);

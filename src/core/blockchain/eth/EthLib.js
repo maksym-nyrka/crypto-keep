@@ -16,7 +16,7 @@ const SEPOLIA_NETWORK = "sepolia";
 class EthLib extends AbstractCurrencyLibrary {
 
     constructor(app) {
-        console.log("EthLib app", app);
+        //console.log("EthLib app", app);
         let validator = new EthValidator();
         let converter = new EthConverter();
         super(app, null, validator, converter);
@@ -162,7 +162,7 @@ class EthLib extends AbstractCurrencyLibrary {
                 const raw = `0x${tx.serialize().toString('hex')}`;
 
                 this.provider.eth.sendSignedTransaction(raw).on("receipt", (data) => {
-                    console.log(data);
+                    //console.log(data);
                     let transactionHash = data["transactionHash"];
                     resolve(transactionHash);
                 }).on("error", (e) => {
