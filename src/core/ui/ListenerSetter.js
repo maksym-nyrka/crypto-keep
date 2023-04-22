@@ -19,37 +19,23 @@ class ListenerSetter {
 
     setSendListener() {
         const sendButton = document.getElementById("send_button");
-        sendButton.addEventListener("click", () => {
+        sendButton.addEventListener("click", async () => {
             const to = document.getElementById("receiver_input").value;
             const amount = document.getElementById("amount_input").value;
 
             sendButton.innerText = "Sending, please wait";
             sendButton.style.pointerEvents = 'none';
 
-            //console.log("start app.sendCurrency:")
             this.app.sendCurrency(to, amount).then(async (result) => {
-                //console.log("setSendListener sendCurrency result:" + result)
-                await this.displayPopup(result, true);
+                await showPopup(result, true, this.app);
             }).catch(async (error) => {
-                    //console.log("setSendListener sendCurrency error:" + error)
-                    await this.displayPopup(error, false);
+                    await showPopup(error, false);
                 }
             ).finally(async () => {
                     sendButton.innerText = "Send";
                     sendButton.style.pointerEvents = 'auto';
                 }
             );
-        })
-    }
-
-    displayPopup(result, success) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                await showPopup(result, success, this.app);
-                resolve();
-            } catch (e) {
-                reject(e);
-            }
         })
     }
 
