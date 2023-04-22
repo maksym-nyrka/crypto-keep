@@ -4,6 +4,10 @@ const AbstractCurrencyLibrary = require("../AbstractCurrencyLibrary");
 const BtcValidator = require("../../validators/blockchain/BtcValidator");
 const BtcConverter = require("../../converters/BtcConverter");
 const BitcoinBlockcypherProvider = require("./BitcoinBlockcypherProvider");
+const isProduction = require("../../helpers/isProduction");
+
+const MAINNET_EXPLORER = "https://live.blockcypher.com/btc";
+const TESTNET_EXPLORER = "https://live.blockcypher.com/btc-testnet";
 
 class BtcLib extends AbstractCurrencyLibrary {
 
@@ -135,6 +139,18 @@ class BtcLib extends AbstractCurrencyLibrary {
                 let fee = await this.provider.getFee()
                 //console.log("btcLib getFee", fee);
                 resolve(fee);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    getTransactionUrl(tx) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const explorerUrl = isProduction ? MAINNET_EXPLORER : TESTNET_EXPLORER;
+                const transactionUrl = `${explorerUrl}/tx/${tx}`;
+                resolve(transactionUrl);
             } catch (e) {
                 reject(e);
             }

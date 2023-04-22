@@ -1,3 +1,5 @@
+const {showPopup} = require("./components/Popup");
+
 class ListenerSetter {
 
     constructor(app) {
@@ -12,6 +14,7 @@ class ListenerSetter {
         this.setSignInButtonListener();
         this.setOpenModalListener();
         this.setCloseModalListener();
+        this.setBackgroundChangeListener();
     }
 
     setSendListener() {
@@ -20,9 +23,33 @@ class ListenerSetter {
             const to = document.getElementById("receiver_input").value;
             const amount = document.getElementById("amount_input").value;
 
-            this.app.sendCurrency(to, amount).then(result => {
-                alert(result);
-            });
+            sendButton.innerText = "Sending, please wait";
+            sendButton.style.pointerEvents = 'none';
+
+            //console.log("start app.sendCurrency:")
+            this.app.sendCurrency(to, amount).then(async (result) => {
+                //console.log("setSendListener sendCurrency result:" + result)
+                await this.displayPopup(result, true);
+            }).catch(async (error) => {
+                    //console.log("setSendListener sendCurrency error:" + error)
+                    await this.displayPopup(error, false);
+                }
+            ).finally(async () => {
+                    sendButton.innerText = "Send";
+                    sendButton.style.pointerEvents = 'auto';
+                }
+            );
+        })
+    }
+
+    displayPopup(result, success) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await showPopup(result, success, this.app);
+                resolve();
+            } catch (e) {
+                reject(e);
+            }
         })
     }
 
@@ -98,10 +125,37 @@ class ListenerSetter {
         document.getElementById("myModal").addEventListener("hidden.bs.modal", async () => {
             if (document.getElementById("main").style.display === "flex") {
                 document.getElementById("welcome").style.display = "none";
+                this.changeBackgroundImage("moon.jpg");
             } else {
                 document.getElementById("welcome").style.display = "block";
+                this.changeBackgroundImage("astronaut.jpg");
             }
         })
+    }
+
+    setBackgroundChangeListener() {
+        const matchMedia = window.matchMedia("(max-width: 767px)");
+        let image;
+
+        matchMedia.addEventListener("change", async () => {
+            if (matchMedia.matches &&
+                document.getElementById("welcome").style.display === "none") {
+                image = "moon.jpg";
+            } else {
+                image = "astronaut.jpg";
+            }
+            this.changeBackgroundImage(image, true);
+        });
+    }
+
+    changeBackgroundImage(image, override) {
+        override = override ?? false;
+
+        const matchMedia = window.matchMedia("(max-width: 767px)");
+
+        if (override || matchMedia.matches) {
+            document.querySelector("body").style.backgroundImage = `url('/dist/images/${image}')`;
+        }
     }
 }
 

@@ -1,9 +1,39 @@
-@media only screen and (max-width: 767px)  {
+@media only screen and (max-width: 767px) {
     #site_name {
         font-size: 40px;
     }
 
     #currency_address {
         word-break: break-all;
+    }
+
+    #welcome_text {
+        margin-bottom: 64%;
+    }
+
+    #welcome {
+        text-shadow: 2px 0 #363636, -2px 0 #363636, 0 2px #363636, 0 -2px #363636,
+        1px 1px #363636, -1px -1px #363636, 1px -1px #363636, -1px 1px #363636;
+    }
+
+    body::after {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        z-index: -1;
+        content: url("../images/moon.jpg");
+    }
+}
+
+@media all and (min-width: 767px) {
+    header {
+        margin-left: 100px;
+    }
+}
+
+@media (max-height: 500px) and (max-width: 767px) {
+    #welcome_text {
+        margin-bottom: 4%;
     }
 }

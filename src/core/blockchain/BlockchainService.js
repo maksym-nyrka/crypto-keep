@@ -74,7 +74,6 @@ class BlockchainService {
 
                 resolve(result);
             } catch (e) {
-                alert(e);
                 reject(e);
             }
         })
@@ -110,6 +109,19 @@ class BlockchainService {
                 await this.credentials.importMnemonic(mnemonic);
 
                 resolve();
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    getCurrentTransactionUrl(tx) {
+        return new Promise(async (resolve, reject) => {
+            try {
+
+                let url = await this.getCurrentLibrary().getCurrentTransactionUrl(tx);
+
+                resolve(url);
             } catch (e) {
                 reject(e);
             }

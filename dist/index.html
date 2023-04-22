@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>CryptoKeep</title>
 
     <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="styles/responsive.css">
 </head>
 
-<body class="text-center text-white bg-dark">
+<body class="text-center text-white bg-transparent">
 
 <header>
     <div>
@@ -28,7 +28,7 @@
     </div>
 </header>
 
-<content>
+<div id="content">
     <main id="main" class="cover-container w-100 h-100 p-3 mx-auto flex-column">
         <div id="currency_info">
             <span>
@@ -48,12 +48,12 @@
 
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Receiver</span>
-                <input id="receiver_input" type="text" class="form-control">
+                <input id="receiver_input" type="text" class="form-control" autocomplete="off">
             </div>
 
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Amount</span>
-                <input id="amount_input" type="number" class="form-control">
+                <input id="amount_input" type="number" class="form-control" autocomplete="off">
             </div>
 
             <p class="lead">
@@ -62,7 +62,7 @@
         </div>
     </main>
 
-    <welcome id="welcome">
+    <div id="welcome">
         <div id="welcome_text">
             <h1>Welcome to CryptoKeep!</h1>
             <p class="lead">
@@ -78,8 +78,8 @@
                    data-bs-toggle="modal" data-bs-target="#myModal">Login</a>
             </p>
         </div>
-    </welcome>
-</content>
+    </div>
+</div>
 
 <div class="modal fade" id="myModal">
     <div class="modal-dialog modal-dialog-centered">

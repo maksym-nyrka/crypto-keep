@@ -3,6 +3,7 @@ const Transaction = require('ethereumjs-tx');
 const EthConverter = require("../../converters/EthConverter");
 const AbstractCurrencyLibrary = require("../AbstractCurrencyLibrary");
 const EthValidator = require("../../validators/blockchain/EthValidator");
+const isProduction = require("../../helpers/isProduction");
 
 const INFURA_PROVIDER_URL = `https://network.infura.io/v3/`;
 const GWEI = 10 ** 9;
@@ -12,6 +13,8 @@ const MAINNET_CHAIN_ID = 1;
 const SEPOLIA_CHAIN_ID = 11155111;
 const MAINNET_NETWORK = "mainnet";
 const SEPOLIA_NETWORK = "sepolia";
+const MAINNET_EXPLORER = "https://etherscan.io";
+const TESTNET_EXPLORER = "https://sepolia.etherscan.io";
 
 class EthLib extends AbstractCurrencyLibrary {
 
@@ -174,6 +177,18 @@ class EthLib extends AbstractCurrencyLibrary {
                 reject(e);
             }
         });
+    }
+
+    getTransactionUrl(tx) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const explorerUrl = isProduction ? MAINNET_EXPLORER : TESTNET_EXPLORER;
+                const transactionUrl = `${explorerUrl}/tx/${tx}`;
+                resolve(transactionUrl);
+            } catch (e) {
+                reject(e);
+            }
+        })
     }
 }
 

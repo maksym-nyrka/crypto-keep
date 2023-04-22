@@ -9,6 +9,8 @@ const MAINNET_CHAIN_ID = 56;
 const TESTNET_CHAIN_ID = 97;
 const MAINNET_NETWORK = "bsc";
 const TESTNET_NETWORK = "bsc_testnet_chapel";
+const MAINNET_EXPLORER = "https://bscscan.com";
+const TESTNET_EXPLORER = "https://testnet.bscscan.com";
 
 class BnbLib extends EthLib {
 
@@ -43,6 +45,18 @@ class BnbLib extends EthLib {
         return new Promise(async (resolve, reject) => {
             try {
                 resolve("/dist/images/bnb.png");
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    getTransactionUrl(tx) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const explorerUrl = isProduction ? MAINNET_EXPLORER : TESTNET_EXPLORER;
+                const transactionUrl = `${explorerUrl}/tx/${tx}`;
+                resolve(transactionUrl);
             } catch (e) {
                 reject(e);
             }

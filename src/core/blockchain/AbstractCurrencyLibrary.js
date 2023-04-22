@@ -126,6 +126,21 @@ class AbstractCurrencyLibrary {
             }
         })
     }
+
+    getCurrentTransactionUrl(tx) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                this.getValidator().validateString(tx);
+
+                const url = await this.getTransactionUrl(tx);
+                this.getValidator().validateUrl(url);
+
+                resolve(url);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
 }
 
 module.exports = AbstractCurrencyLibrary;

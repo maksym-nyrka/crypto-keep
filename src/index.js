@@ -82,8 +82,8 @@ class Application {
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {
             try {
-                let address = await this.blockchainService.sendCurrency(to, amount);
-                resolve(address);
+                let result = await this.blockchainService.sendCurrency(to, amount);
+                resolve(result);
             } catch (e) {
                 reject(e);
             }
@@ -108,6 +108,18 @@ class Application {
                 this.prepareInterface();
                 //console.log("importMnemonic" ,this)
                 resolve(result);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    getCurrentTransactionUrl(tx) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let url = await this.blockchainService.getCurrentTransactionUrl(tx);
+                //console.log("App getCurrentTransactionUrl after:" + url);
+                resolve(url);
             } catch (e) {
                 reject(e);
             }
