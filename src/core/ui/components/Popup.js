@@ -1,4 +1,5 @@
 const Swal = require('sweetalert2');
+require('animate.css');
 
 async function showPopup(result, success, app) {
     let icon;
@@ -18,13 +19,20 @@ async function showPopup(result, success, app) {
         html = result;
     }
 
-    Swal.fire({
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-lg btn-outline-dark fw-bold'
+        },
+        buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
         width: "23em",
-        color: "#ffffff",
-        background: "#1f3c5d",
+        color: "#1f3c5d",
+        background: "#ffffff",
         title: title,
         icon: icon,
-        confirmButtonText: '<span class="btn-secondary fw-bold black-text">OK</span> ',
+        confirmButtonText: 'OK',
         confirmButtonColor: '#ffffff',
         html: html,
     })

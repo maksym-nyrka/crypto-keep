@@ -31,26 +31,6 @@ class BnbLib extends EthLib {
         return this.app.isProduction() ? MAINNET_CHAIN_ID : TESTNET_CHAIN_ID;
     }
 
-    getCurrencyFullName() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                resolve("Binance Coin");
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
-
-    getCurrencyImage() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                resolve("/dist/images/bnb.png");
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
-
     getTransactionUrl(tx) {
         return new Promise(async (resolve, reject) => {
             try {

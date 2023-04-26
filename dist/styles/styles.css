@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Plus+Jakarta+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Braah+One&family=Orbitron:wght@700&family=Plus+Jakarta+Sans&display=swap');
 
 body {
     display: grid;
@@ -89,6 +89,10 @@ footer {
 #site_name {
     font-family: 'Orbitron', sans-serif;
     font-size: 50px;
+}
+
+.welcome-text{
+    font-family: 'Braah One', sans-serif;
 }
 
 #welcome {

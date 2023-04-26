@@ -64,26 +64,6 @@ class Erc20Lib extends EthLib {
         return GAS_LIMIT;
     }
 
-    getCurrencyFullName() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                resolve("MKN Token");
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
-
-    getCurrencyImage() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                resolve("/dist/images/ethereum_token.png");
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
-
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {
             try {

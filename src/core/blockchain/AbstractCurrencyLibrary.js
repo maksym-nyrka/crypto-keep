@@ -141,6 +141,28 @@ class AbstractCurrencyLibrary {
             }
         })
     }
+
+    getCurrencyFullName() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const fullName = await this.app.fetchCurrentBlockchainData("fullName");
+                resolve(fullName);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
+    getCurrencyImage() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const imagePath = await this.app.fetchCurrentBlockchainData("imagePath");
+                resolve(imagePath);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
 }
 
 module.exports = AbstractCurrencyLibrary;

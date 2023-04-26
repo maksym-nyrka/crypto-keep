@@ -4,6 +4,7 @@ const WalletUi = require("./core/ui/WalletUi");
 const BlockchainService = require("./core/blockchain/BlockchainService");
 const HttpService = require("./core/services/HttpService");
 const isProduction = require("./core/helpers/isProduction");
+const FetchService = require("./core/fetch/FetchService");
 
 class Application {
 
@@ -12,6 +13,7 @@ class Application {
         this.httpService = new HttpService(this);
         this.walletUi = new WalletUi(this);
         this.blockchainService = new BlockchainService(this);
+        this.fetchService = new FetchService();
     }
 
     isProduction() {
@@ -124,6 +126,18 @@ class Application {
                 reject(e);
             }
         })
+    }
+
+    fetchCurrentBlockchainData(key) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.fetchService.fetchBlockchainData(this.getCurrency(), key);
+                resolve(result);
+            } catch (e) {
+                reject(e);
+            }
+        })
+
     }
 }
 

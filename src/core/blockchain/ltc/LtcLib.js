@@ -18,26 +18,6 @@ class LtcLib extends BtcLib {
         return NETWORK;
     }
 
-    getCurrencyFullName() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                resolve("Litecoin (Mainnet)");
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
-
-    getCurrencyImage() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                resolve("/dist/images/litecoin.png");
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
-
     getTransactionUrl(tx) {
         return new Promise(async (resolve, reject) => {
             try {
