@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const dotenv = require('dotenv');
 
 const isProduction = process.env.NODE_ENV === 'production';
 const stylesHandler = 'style-loader';
@@ -13,9 +12,6 @@ const config = {
     plugins: [
         new webpack.ProvidePlugin({
             Buffer: ['buffer', 'Buffer'],
-        }),
-        new webpack.DefinePlugin({
-            'process.env': JSON.stringify(dotenv.config().parsed)
         }),
     ],
     resolve: {

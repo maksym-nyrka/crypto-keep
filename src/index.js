@@ -1,31 +1,22 @@
-const DEFAULT_CURRENCY = "ETH";
-
 const WalletUi = require("./core/ui/WalletUi");
-const BlockchainService = require("./core/blockchain/BlockchainService");
-const HttpService = require("./core/services/HttpService");
-const isProduction = require("./core/helpers/isProduction");
-const FetchService = require("./core/fetch/FetchService");
+const FetchService = require("./core/services/FetchData");
+const MnemonicGenerator = require("./core/services/MnemonicGenerator");
 
 class Application {
 
     constructor() {
-        this.setCurrency(DEFAULT_CURRENCY);
-        this.httpService = new HttpService(this);
         this.walletUi = new WalletUi(this);
-        this.blockchainService = new BlockchainService(this);
         this.fetchService = new FetchService();
+        this.mnemonicGenerator = new MnemonicGenerator();
     }
 
-    isProduction() {
-        return isProduction;
+    async setBlockchain(blockchain) {
+        this.blockchain = blockchain;
     }
 
-    prepareInterface() {
-        this.walletUi.renderUi();
-    }
-
-    changeCurrency(currency) {
+    async changeCurrency(currency) {
         this.setCurrency(currency);
+        await this.setBlockchain(await this.fetchCurrentBlockchainObject());
         this.walletUi.renderUi();
     }
 
@@ -40,7 +31,7 @@ class Application {
     getCurrentBalance() {
         return new Promise(async (resolve, reject) => {
             try {
-                let balance = await this.blockchainService.getCurrentBalance();
+                let balance = this.blockchain['balance'];
                 resolve(balance);
             } catch (e) {
                 reject(e);
@@ -51,7 +42,7 @@ class Application {
     getCurrentAddress() {
         return new Promise(async (resolve, reject) => {
             try {
-                let address = await this.blockchainService.getCurrentAddress();
+                let address = this.blockchain['address'];
                 resolve(address);
             } catch (e) {
                 reject(e);
@@ -62,7 +53,7 @@ class Application {
     getCurrencyFullName() {
         return new Promise(async (resolve, reject) => {
             try {
-                let name = await this.blockchainService.getCurrencyFullName();
+                let name = this.blockchain['fullName'];
                 resolve(name);
             } catch (e) {
                 reject(e);
@@ -73,7 +64,7 @@ class Application {
     getCurrencyImage() {
         return new Promise(async (resolve, reject) => {
             try {
-                let image = await this.blockchainService.getCurrencyImage();
+                let image = this.blockchain['imagePath'];
                 resolve(image);
             } catch (e) {
                 reject(e);
@@ -84,7 +75,7 @@ class Application {
     sendCurrency(to, amount) {
         return new Promise(async (resolve, reject) => {
             try {
-                let result = await this.blockchainService.sendCurrency(to, amount);
+                let result = await this.fetchService.sendCurrency(to, amount);
                 resolve(result);
             } catch (e) {
                 reject(e);
@@ -95,7 +86,7 @@ class Application {
     generateMnemonic() {
         return new Promise(async (resolve, reject) => {
             try {
-                let result = await this.blockchainService.generateMnemonic();
+                let result = this.mnemonicGenerator.generateMnemonic();
                 resolve(result);
             } catch (e) {
                 reject(e);
@@ -103,12 +94,10 @@ class Application {
         })
     }
 
-    importMnemonic(mnemonic) {
+    loginWithMnemonic(mnemonic) {
         return new Promise(async (resolve, reject) => {
             try {
-                let result = await this.blockchainService.importMnemonic(mnemonic);
-                this.prepareInterface();
-                //console.log("importMnemonic" ,this)
+                let result = await this.fetchService.loginWithMnemonic(mnemonic);
                 resolve(result);
             } catch (e) {
                 reject(e);
@@ -116,28 +105,16 @@ class Application {
         })
     }
 
-    getCurrentTransactionUrl(tx) {
+    fetchCurrentBlockchainObject() {
         return new Promise(async (resolve, reject) => {
             try {
-                let url = await this.blockchainService.getCurrentTransactionUrl(tx);
-                //console.log("App getCurrentTransactionUrl after:" + url);
-                resolve(url);
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
-
-    fetchCurrentBlockchainData(key) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const result = await this.fetchService.fetchBlockchainData(this.getCurrency(), key);
+                const result = await this.fetchService.fetchBlockchainObject(this.getCurrency());
+                // console.log('fetchCurrentBlockchainObject:', result);
                 resolve(result);
             } catch (e) {
                 reject(e);
             }
         })
-
     }
 }
 

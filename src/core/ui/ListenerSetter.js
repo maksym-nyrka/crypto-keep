@@ -1,17 +1,19 @@
-const {showPopup} = require("./components/Popup");
+const {alert} = require("./components/Alert");
 
 class ListenerSetter {
+
+    DEFAULT_CURRENCY = "ETH";
 
     constructor(app) {
         this.app = app;
     }
 
-    setEventListeners() {
+    async setEventListeners() {
         this.setSendListener();
         this.setChangeCurrencyListener();
         this.setActiveCurrencyListener();
-        this.setMnemonicListeners();
-        this.setSignInButtonListener();
+        this.setGenerateMnemonicListener();
+        await this.setSignInButtonListener();
         this.setOpenModalListener();
         this.setCloseModalListener();
         this.setBackgroundChangeListener();
@@ -26,12 +28,9 @@ class ListenerSetter {
             sendButton.innerText = "Sending, please wait";
             sendButton.style.pointerEvents = 'none';
 
-            this.app.sendCurrency(to, amount).then(async (result) => {
-                await showPopup(result, true, this.app);
-            }).catch(async (error) => {
-                    await showPopup(error, false);
-                }
-            ).finally(async () => {
+            this.app.sendCurrency(to, amount).then(async (response) => {
+                await alert(response);
+            }).finally(async () => {
                     sendButton.innerText = "Send";
                     sendButton.style.pointerEvents = 'auto';
                 }
@@ -43,10 +42,10 @@ class ListenerSetter {
         const currencyLinks = document.getElementsByClassName("currency-select");
 
         for (const currencyLink of currencyLinks) {
-            currencyLink.addEventListener("click", evt => {
+            currencyLink.addEventListener("click", async (evt) => {
                 const targetElement = evt.target;
                 const currency = targetElement.getAttribute("data-value");
-                this.app.changeCurrency(currency);
+                await this.app.changeCurrency(currency);
             })
         }
     }
@@ -55,7 +54,7 @@ class ListenerSetter {
         const currencyLinks = document.querySelectorAll('.currency-select');
 
         currencyLinks.forEach(link => {
-            link.addEventListener('click', this.toggleCurrencyActive)
+            link.addEventListener('click', this.toggleCurrencyActive);
         });
     }
 
@@ -68,36 +67,25 @@ class ListenerSetter {
         this.classList.toggle('active');
     }
 
-    setMnemonicListeners() {
-        this.setGenerateMnemonicListener();
-        this.setImportMnemonicOnInputListener();
-    }
-
     setGenerateMnemonicListener() {
         document.getElementById("generate_mnemonic").addEventListener("click", async () => {
             let mnemonic = await this.app.generateMnemonic();
             const mnemonicInput = document.getElementById("import_mnemonic");
             mnemonicInput.value = mnemonic;
-            //console.log(mnemonic);
-            this.app.importMnemonic(mnemonic);
         })
     }
 
-    setImportMnemonicOnInputListener() {
-        document.getElementById("import_mnemonic").addEventListener("input", async () => {
-            let element = event.target || event.srcElement;
-            let mnemonic = element.value;
-            //console.log(mnemonic);
-            this.app.importMnemonic(mnemonic);
-        })
-    }
-
-    setSignInButtonListener() {
+    async setSignInButtonListener() {
         document.getElementById("sign_in_button").addEventListener("click", async () => {
             document.getElementById("welcome").style.display = "none";
             document.getElementById("main").style.display = "flex";
             document.getElementById("header_nav").style.display = "flex";
-            this.app.prepareInterface();
+
+            const mnemonicInput = document.getElementById("import_mnemonic");
+            const mnemonic = mnemonicInput.value;
+
+            await this.app.loginWithMnemonic(mnemonic);
+            await this.app.changeCurrency(this.DEFAULT_CURRENCY);
         })
     }
 

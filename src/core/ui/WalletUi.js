@@ -7,15 +7,15 @@ class WalletUi {
         this.app = app;
         this.renderer = new Renderer(this.app);
         this.listenerSetter = new ListenerSetter(this.app);
-        this.setEventListeners();
+        this.setEventListeners().then(() => {});
     }
 
     renderUi() {
         this.renderer.renderUi();
     }
 
-    setEventListeners() {
-        this.listenerSetter.setEventListeners();
+    async setEventListeners() {
+       await this.listenerSetter.setEventListeners();
     }
 }
 
