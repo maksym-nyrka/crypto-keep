@@ -6,16 +6,14 @@ Server side is here: https://github.com/maksym-nyrka/crypto-keep-server
 
 
 ### Some screenshots:
+**Mobile version:**  
+![Mobile version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/Screenshot+2023-05-02+at+15.48.21.png)  
+
 **Desktop version:**  
 ![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/desktop1.png)
 ![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/desktop2.png)
 ![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/desktop3.png)
 ![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/desktop4.png)
-
-**Mobile version:**  
-![Mobile version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/mobile_one.jpg)  
-![Mobile version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/mobile_three.jpg)  
-![Mobile version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/mobile_two.jpg) 
 
 
 
