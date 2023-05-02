@@ -2,8 +2,7 @@ const HttpService = require("./HttpService");
 
 class FetchData {
 
-    BACKEND_URL='http://localhost:8080'
-    //BACKEND_URL = 'https://vh6o5auivh.execute-api.eu-central-1.amazonaws.com/prod/'
+    BACKEND_URL = 'https://vh6o5auivh.execute-api.eu-central-1.amazonaws.com/prod/';
 
     constructor() {
         this.httpService = new HttpService();
