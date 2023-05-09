@@ -42,6 +42,7 @@ async function showPopup(data) {
         confirmButtonText: 'OK',
         confirmButtonColor: '#ffffff',
         html: data.html,
+        heightAuto: false
     })
 }
 
