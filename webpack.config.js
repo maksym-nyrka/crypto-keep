@@ -1,3 +1,4 @@
+require('dotenv').config()
 const webpack = require('webpack');
 const path = require('path');
 
@@ -5,10 +6,20 @@ const isProduction = process.env.NODE_ENV === 'production';
 const stylesHandler = 'style-loader';
 
 const config = {
-    entry: './src/index.js',
     output: {
+        filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/dist/',
     },
+    devServer: {
+        host: process.env.COMPUTER_NAME,
+        port: 8080,
+        compress: true,
+        static: {
+            directory: path.join(__dirname, '/dist')
+        }
+    },
+    entry: './src/index.js',
     plugins: [
         new webpack.ProvidePlugin({
             Buffer: ['buffer', 'Buffer'],

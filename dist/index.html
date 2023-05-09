@@ -36,23 +36,23 @@
                 <img id="currency_image">
             </span>
             <p class="currency-address lead">
-                <span>Address:</span> <span id="currency_address">currency_address</span>
+                <span data-cy="currency-address-title">Address:</span> <span id="currency_address">currency_address</span>
             </p>
-            <p class="lead">
+            <p data-cy="currency-balance" class="lead">
                 <span id="currency_balance">currency_balance</span> <span class="currency_name">currency_name</span>
             </p>
         </div>
 
         <div id="send_currency">
-            <h4>Send currency:</h4>
+            <h4 data-cy="send-currency-title">Send currency:</h4>
 
             <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Receiver</span>
+                <span data-cy="receiver-title" class="input-group-text">Receiver</span>
                 <input id="receiver_input" type="text" class="form-control" autocomplete="off">
             </div>
 
             <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Amount</span>
+                <span data-cy="amount-title" class="input-group-text">Amount</span>
                 <input id="amount_input" type="number" class="form-control" autocomplete="off">
             </div>
 
@@ -64,14 +64,14 @@
 
     <div id="welcome">
         <div id="welcome_text">
-            <h1 class="welcome-text animate__animated animate__fadeIn animate__delay-1s" >Welcome to CryptoKeep!</h1>
+            <h1 data-cy="welcome-text" class="welcome-text animate__animated animate__fadeIn animate__delay-1s" >Welcome to CryptoKeep!</h1>
             <p class="lead">
-                <span class="welcome-text animate__animated animate__fadeIn animate__delay-1s">Non-custodial multicurrency wallet.</span>
+                <span data-cy="welcome-description-text" class="welcome-text animate__animated animate__fadeIn animate__delay-1s">Non-custodial multicurrency wallet.</span>
             </p>
         </div>
         <div id="login">
             <p class="lead">
-                <span class="welcome-text animate__delay-2s animate__animated animate__fadeIn">Login via mnemonic to start using it:</span>
+                <span data-cy="login-text" class="welcome-text animate__delay-2s animate__animated animate__fadeIn">Login via mnemonic to start using it:</span>
             </p>
             <p class="lead">
                 <a href="#" id="login_button" class="btn btn-lg btn-secondary fw-bold border-white bg-white
@@ -87,17 +87,17 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title">Login</h4>
+                <h4 data-cy="modal-title" class="modal-title">Login</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
-                <p>Please enter the mnemonic:</p>
-                <p>If you don't have a mnemonic phrase you can generate a new one.</p>
+                <p data-cy="enter-mnemonic-text">Please enter the mnemonic:</p>
+                <p data-cy="generate-mnemonic-text">If you don't have a mnemonic phrase you can generate a new one.</p>
                 <input id="import_mnemonic" name="import-mnemonic"
                        placeholder="your mnemonic phrase" autocomplete="off">
                 <button id="generate_mnemonic" class="btn btn-light" >Generate new</button>
-                <p>Site doesn't store your seed phrases, so remember to save it before proceeding!</p>
+                <p data-cy="save-mnemonic-text">Site doesn't store your seed phrases, so remember to save it before proceeding!</p>
             </div>
 
             <div class="modal-footer">
@@ -108,7 +108,7 @@
 </div>
 
 <footer class="mt-auto text-white-50">
-    <p>Made by <a href="mailto:maksym.nyrka@gmail.com" class="text-white">maksym.nyrka</a></p>
+    <p data-cy="footer-text">Made by <a data-cy="footer-link" href="mailto:maksym.nyrka@gmail.com" class="text-white">maksym.nyrka</a></p>
 </footer>
 
 
