@@ -11,8 +11,8 @@ Server side is here: https://github.com/maksym-nyrka/crypto-keep-server
 
 **Desktop version:**  
 ![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/desktop1.png)
-![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/desktop3.png)
-![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/desktop4.png)
+![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/desktop_bitcoin.png)
+![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/Screenshot+2023-05-09+at+12.18.32.png)
 
 
 
