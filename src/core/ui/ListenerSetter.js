@@ -33,6 +33,7 @@ class ListenerSetter {
             }).finally(async () => {
                     sendButton.innerText = "Send";
                     sendButton.style.pointerEvents = 'auto';
+                    await this.app.updateCurrentCurrency();
                 }
             );
         })

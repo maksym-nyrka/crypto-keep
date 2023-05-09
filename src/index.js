@@ -16,6 +16,10 @@ class Application {
 
     async changeCurrency(currency) {
         this.setCurrency(currency);
+        await this.updateCurrentCurrency();
+    }
+
+    async updateCurrentCurrency() {
         await this.setBlockchain(await this.fetchCurrentBlockchainObject());
         this.walletUi.renderUi();
     }
