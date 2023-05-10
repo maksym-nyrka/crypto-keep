@@ -15,7 +15,7 @@ function getPopupData(sendCurrencyResponse) {
         data.icon = 'success';
         data.title = 'Woo-hoo! Successfully sent!';
         data.html = `View on block explorer: <br>` +
-            `<a href=\'${url}\'  target="_blank" rel="noopener noreferrer">${url}</a> `;
+            `<a href=\'${url}\'  target="_blank" rel="noopener noreferrer">${url}</a>`;
     } else {
         data.icon = 'error';
         data.title = 'One tiny detail...';
