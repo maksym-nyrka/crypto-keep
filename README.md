@@ -1,4 +1,5 @@
-Server side is here: https://github.com/maksym-nyrka/crypto-keep-server
+Server side is here: https://github.com/maksym-nyrka/crypto-keep-server  
+Tests are here: https://github.com/maksym-nyrka/crypto-keep-tests
 
 ### Technologies used:
 **Frontend:** Bootstrap, Webpack, Sweetalert2, Animate.css.  
