@@ -3,8 +3,8 @@ Tests are here: https://github.com/maksym-nyrka/crypto-keep-tests
 
 ### Technologies used:
 **Frontend:** Bootstrap, Webpack, Sweetalert2, Animate.css.  
-**Backend:** Express.js, Node.js web3.js, MongoDB, Swagger, AWS S3, AWS CloundFront, AWS API Gateway, AWS EC2, AWS Cerfiticates, Certbot, pm2, GoDaddy. 
-
+**Backend:** Express.js, Node.js, web3.js, MongoDB, Swagger, AWS S3, AWS CloundFront, AWS API Gateway, AWS EC2, AWS Cerfiticates, Certbot, pm2, GoDaddy.   
+**Tests:** Cypress, Mocha, Chai, axios.  
 
 ### Some screenshots:
 **Mobile version:**  
