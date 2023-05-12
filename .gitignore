@@ -1,6 +1,11 @@
-node_modules
-package-lock.json
-.idea
-/dist/main.js
+.DS_Store
 .env
+package-lock.json
+/.idea
+/dist/main.js
+/node_modules
 /images
+/cypress/videos
+/cypress/screenshots
+*.pem
+*.key

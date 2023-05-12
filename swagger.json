@@ -1,0 +1,176 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "CryptoKeep API",
+    "description": "Methods for using different blockchain tokens & coins: ETH, MKN Token, BTC, LTC, BNB",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "vh6o5auivh.execute-api.eu-central-1.amazonaws.com",
+  "basePath": "/prod/",
+  "tags": [
+    {
+      "name": "Wallet",
+      "description": "API for interacting with app"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/loginWithMnemonic": {
+      "post": {
+        "tags": [
+          "Wallet"
+        ],
+        "description": "Method used to login to wallet. Mnemonic converted to seed, and all wallet addresses are derived from it.",
+        "parameters": [
+          {
+            "name": "mnemonic",
+            "in": "body",
+            "description": "Mnemonic phrase",
+            "schema": {
+              "$ref": "#/definitions/Mnemonic"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Message informing about successful login",
+            "schema": {
+              "$ref": "#/definitions/MnemonicResponse"
+            }
+          }
+        }
+      }
+    },
+    "/blockchains/{currency_name}": {
+      "parameters": [
+        {
+          "name": "currency_name",
+          "in": "path",
+          "required": true,
+          "description": "Currency ticker that we want to get info (e.g. 'ETH', 'MKN', 'BTC', 'LTC' or 'BNB')",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Wallet"
+        ],
+        "summary": "Get blockchain details",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Blockchain"
+            }
+          },
+          "404": {
+            "description": "Currency not found"
+          }
+        }
+      }
+    },
+    "/sendCurrency": {
+      "post": {
+        "tags": [
+          "Wallet"
+        ],
+        "description": "Send currency from wallet to another account",
+        "parameters": [
+          {
+            "name": "receiver",
+            "in": "body",
+            "description": "Receiver parameters",
+            "schema": {
+              "$ref": "#/definitions/SendCurrencyRequest"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Message with 'status'='success' and 'result' has the link to transaction",
+            "schema": {
+              "$ref": "#/definitions/SendCurrencyResponse"
+            }
+          },
+          "400": {
+            "description": "Message with 'status'='error' and 'result' with an error message",
+            "schema": {
+              "$ref": "#/definitions/SendCurrencyResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Mnemonic": {
+      "properties": {
+        "mnemonic": {
+          "type": "string"
+        }
+      }
+    },
+    "MnemonicResponse": {
+      "properties": {
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "Blockchain": {
+      "properties": {
+        "imagePath": {
+          "type": "string"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "address": {
+          "type": "number"
+        },
+        "balance": {
+          "type": "number"
+        }
+      }
+    },
+    "SendCurrencyRequest": {
+      "properties": {
+        "to": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        }
+      }
+    },
+    "SendCurrencyResponse": {
+      "properties": {
+        "result": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
+

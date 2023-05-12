@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "d214c0df-6b90-4f73-97f7-2b241ec6eaf5",
+		"name": "crypto-keep",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26792470"
+	},
+	"item": [
+		{
+			"name": "getBlockchain",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BACKEND_URL}}/blockchains/ETH",
+					"host": [
+						"{{BACKEND_URL}}"
+					],
+					"path": [
+						"blockchains",
+						"ETH"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sendCurrency",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"to\": \"0x107f3cCC0Ac5aC2950A2A3860029b2677F3B79CC\",\n    \"amount\": \"0.00001\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BACKEND_URL}}/sendCurrency",
+					"host": [
+						"{{BACKEND_URL}}"
+					],
+					"path": [
+						"sendCurrency"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loginWithMnemonic",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"mnemonic\": \"movie avoid rack lesson rival rice you average caution eternal distance wood\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BACKEND_URL}}/loginWithMnemonic",
+					"host": [
+						"{{BACKEND_URL}}"
+					],
+					"path": [
+						"loginWithMnemonic"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "loginWithMnemonic",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mnemonic\": \"movie avoid rack lesson rival rice you average caution eternal distance wood\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BACKEND_URL}}/loginWithMnemonic",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"loginWithMnemonic"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 02 May 2023 06:12:07 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "42"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-amzn-RequestId",
+							"value": "645278e0-e9e0-463a-ac1f-91c66dc9f564"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token"
+						},
+						{
+							"key": "x-amzn-ErrorType",
+							"value": "MissingAuthenticationTokenException"
+						},
+						{
+							"key": "x-amz-apigw-id",
+							"value": "ER90pHW8FiAFt2w="
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET,OPTIONS"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Missing Authentication Token\"\n}"
+				}
+			]
+		}
+	]
+}

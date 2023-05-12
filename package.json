@@ -1,27 +1,44 @@
 {
-  "name": "my-webpack-project",
+  "name": "crypto-keep",
   "version": "1.0.0",
-  "description": "My webpack project",
+  "description": "Crypto wallet",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
-    "dev": "npx webpack serve",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "cy:open": "cypress open",
+    "backend:start": "node backend/server.js",
+    "frontend:start": "npx webpack serve",
+    "test:apiSendCurrency": "npx mocha cypress/tests/api/sendCurrency.js",
+    "test:api": "cypress run --spec 'cypress/tests/api/*.js' && npm run test:apiSendCurrency",
+    "test:ui": "cypress run --spec 'cypress/tests/ui/*.js'",
+    "test:regression": "npm run deleteTestResults && npm run test:api && npm run test:ui",
+    "deleteTestResults": "del-cli --force ./cypress/screenshots ./cypress/videos"
   },
-  "author": "",
+  "author": "Maksym Nyrka",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maksym-nyrka/crypto-keep.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maksym-nyrka/crypto-keep/issues"
+  },
+  "homepage": "https://github.com/maksym-nyrka/crypto-keep#readme",
   "devDependencies": {
     "@babel/core": "^7.21.3",
     "@babel/preset-env": "^7.20.2",
     "@webpack-cli/generators": "^3.0.1",
     "animate.css": "^4.1.1",
     "assert": "^2.0.0",
+    "axios": "^1.4.0",
     "babel-loader": "^9.1.2",
     "buffer": "^6.0.3",
     "css-loader": "^6.7.3",
+    "cypress": "^12.12.0",
+    "del-cli": "^5.0.0",
     "dotenv": "^16.0.3",
     "style-loader": "^3.3.2",
     "webpack": "^5.76.3",
@@ -29,8 +46,21 @@
     "webpack-dev-server": "^4.15.0"
   },
   "dependencies": {
+    "bip32": "^4.0.0",
     "bip39": "^3.1.0",
+    "bitcoinjs-lib": "^5.1.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "ethereum-address": "^0.0.4",
+    "ethereum-private-key-to-address": "^0.0.7",
+    "ethereumjs-tx": "^1.3.7",
+    "express": "^4.18.2",
+    "mongodb": "^5.5.0",
     "stream-browserify": "^3.0.0",
-    "sweetalert2": "^11.7.3"
+    "swagger-ui-express": "^4.6.3",
+    "sweetalert2": "^11.7.3",
+    "tiny-secp256k1": "^2.2.1",
+    "wallet-address-validator": "^0.2.4",
+    "web3": "^1.9.0"
   }
 }
