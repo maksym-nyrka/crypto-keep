@@ -1,8 +1,10 @@
 const HttpService = require("./HttpService");
+const isProduction = require("../helpers/isProduction");
 
 class FetchData {
 
-    BACKEND_URL = 'https://vh6o5auivh.execute-api.eu-central-1.amazonaws.com/production';
+    BACKEND_URL = isProduction ? 'https://vh6o5auivh.execute-api.eu-central-1.amazonaws.com/production'
+        : 'http://localhost:8081';
 
     constructor() {
         this.httpService = new HttpService();

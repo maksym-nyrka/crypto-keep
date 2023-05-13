@@ -10,8 +10,8 @@ class WalletUi {
         this.setEventListeners().then(() => {});
     }
 
-    renderUi() {
-        this.renderer.renderUi();
+    async renderUi() {
+        await this.renderer.renderUi();
     }
 
     async setEventListeners() {
