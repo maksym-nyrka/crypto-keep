@@ -21,7 +21,7 @@ class Application {
 
     async updateCurrentCurrency() {
         await this.setBlockchain(await this.fetchCurrentBlockchainObject());
-        this.walletUi.renderUi();
+        await this.walletUi.renderUi();
     }
 
     setCurrency(currency) {

@@ -31,7 +31,7 @@ class Renderer {
         const addressElement = document.getElementById("currency_address");
 
         const address = await this.app.getCurrentAddress();
-        addressElement.innerText = String('address5');
+        addressElement.innerText = String(address);
     }
 
     async renderFullName() {
