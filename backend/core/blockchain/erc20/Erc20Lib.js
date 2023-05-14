@@ -73,8 +73,8 @@ class Erc20Lib extends EthLib {
                 amount = await this.fromDecimals(amount);
 
                 let data = this.getContract().methods.transfer(to, amount).encodeABI();
-                let txData = await this._formatTransactionParams(this.getContractAddress(), "0", data);
-                let hash = await this._makeTransaction(txData);
+                let txData = await this.formatTransactionParams(this.getContractAddress(), "0", data);
+                let hash = await this.makeTransaction(txData);
 
                 resolve(hash);
             } catch (e) {

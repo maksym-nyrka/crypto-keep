@@ -58,8 +58,8 @@ class EthLib extends AbstractCurrencyLibrary {
                 this.getValidator().validateAddress(to, "TX Receiver");
                 this.getValidator().validateNumber(amount, "sendCurrency amount");
 
-                let txData = await this._formatTransactionParams(to, amount);
-                let hash = await this._makeTransaction(txData);
+                let txData = await this.formatTransactionParams(to, amount);
+                let hash = await this.makeTransaction(txData);
 
                 resolve(hash);
             } catch (e) {
@@ -68,7 +68,7 @@ class EthLib extends AbstractCurrencyLibrary {
         })
     }
 
-    _formatTransactionParams(to, value, data = "") {
+    formatTransactionParams(to, value, data = "") {
         return new Promise(async (resolve, reject) => {
             try {
                 this.getValidator().validateAddress(to);
@@ -136,7 +136,7 @@ class EthLib extends AbstractCurrencyLibrary {
         });
     }
 
-    _makeTransaction(txParams) {
+    makeTransaction(txParams) {
         return new Promise(async (resolve, reject) => {
             try {
                 const tx = new Transaction(txParams);

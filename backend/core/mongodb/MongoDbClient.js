@@ -19,6 +19,10 @@ class MongoDbClient {
         });
     }
 
+    async connect() {
+       await this.getClient().connect();
+    }
+
     getClient() {
         return this.client;
     }
@@ -29,19 +33,14 @@ class MongoDbClient {
 
     async getBlockchainData(key, currencyTicker) {
         try {
-            await this.getClient().connect();
-            const db = this.getDb();
-            const collection = db.collection('blockchains');
-
-            const query = { ticker: currencyTicker };
-
+            await this.connect();
+            const collection = this.getDb().collection('blockchains');
+            const query = {ticker: currencyTicker};
             const result = await collection.findOne(query);
-            //console.log('result from db', result[key]);
-            return  result[key];
+
+            return result[key];
         } catch (e) {
             console.error(e);
-        } finally {
-            await this.getClient().close();
         }
     }
 }
