@@ -33,7 +33,8 @@ class HttpService {
             const options = {
                 body: data,
                 method: method,
-                headers: headers
+                headers: headers,
+                credentials: 'include'
             };
             fetch(url, options).then((res) => res.json())
                 .then(data => resolve(data))

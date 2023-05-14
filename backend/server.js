@@ -7,16 +7,23 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Application = require("./core/Application");
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 
 const swaggerUi = require('swagger-ui-express'),
-swaggerDocument = require('../swagger.json');
+    swaggerDocument = require('../swagger.json');
 
 const privateKey = fs.readFileSync('./server.key', 'utf8');
 const certificate = fs.readFileSync('./server.crt', 'utf8');
 const credentials = {key: privateKey, cert: certificate};
+const jwtSecret = process.env.JWT_SECRET
 
 const server = express();
-server.use(cors());
+server.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+}));
+server.use(cookieParser());
 server.use(bodyParser.json());
 server.use(
     '/api-docs',
@@ -25,7 +32,20 @@ server.use(
 );
 const app = new Application();
 
-server.get("/blockchains/:currencyTicker", async (req, res) => {
+const verifyToken = (req, res, next) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).send('Unauthorized');
+    }
+    try {
+        req.user = jwt.verify(token, jwtSecret);
+        next();
+    } catch (err) {
+        res.status(400).send('Invalid token');
+    }
+};
+
+server.get("/blockchains/:currencyTicker", verifyToken, async (req, res) => {
     try {
         let currency = req.params['currencyTicker'];
         console.log('get /blockchains/' + currency);
@@ -58,13 +78,21 @@ server.post("/loginWithMnemonic/", async (req, res) => {
 
         let result = {};
         result.status = 'success'
+        let token = jwt.sign({user: 'crypto-keep'}, jwtSecret);
+        res.cookie('token', token, {
+            httpOnly: true,
+            sameSite: 'none',
+            secure: true,
+            domain: process.env.API_HOST
+        });
         res.json(result);
     } catch (e) {
         console.error(e);
     }
 })
 
-server.post("/sendCurrency/", async (req, res) => {
+
+server.post("/sendCurrency/", verifyToken, async (req, res) => {
     try {
         console.log('post /sendCurrency/');
         console.log(req.body);
