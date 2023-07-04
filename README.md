@@ -8,18 +8,3 @@
 2. Private key to HTTPS Sertificate 'server.key' in root folder must be present
 3. To start backend server: `npm run backend:start`  
 4. To start frontend: `npm run frontend:start`
-
-Swagger:
-https://backend.crypto-keep.com:8443/api-docs/
-
-Postman collection:
-https://github.com/maksym-nyrka/crypto-keep-server/tree/master/postman
-
-### Some screenshots:
-**Mobile version:**  
-![Mobile version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/Screenshot+2023-05-02+at+15.53.30.png)  
-
-**Desktop version:**  
-![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/desktop1.png)
-![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/desktop_bitcoin.png)
-![Desktop version](https://crypto-keep-github-assets.s3.eu-central-1.amazonaws.com/Screenshot+2023-05-09+at+12.18.32.png)
