@@ -129,7 +129,7 @@ class ListenerSetter {
         const matchMedia = window.matchMedia("(max-width: 767px)");
 
         if (override || matchMedia.matches) {
-            document.querySelector("body").style.backgroundImage = `url('/dist/images/${image}')`;
+            document.querySelector("body").style.backgroundImage = `url('/images/${image}')`;
         }
     }
 }
